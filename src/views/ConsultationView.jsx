@@ -41,7 +41,7 @@ export const ConsultationView = () => {
           className="btn btn-primary btn-sm"
           onClick={() => setActiveTab('booking')}
         >
-          <Calendar size={16} /> 1회 방문 훈련 신청 (15만원)
+          <Calendar size={16} /> 방문 훈련 신청 (회당 15만원~)
         </button>
       </div>
 

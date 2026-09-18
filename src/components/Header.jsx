@@ -42,7 +42,7 @@ export const Header = () => {
           >
             <Calendar size={16} />
             방문 훈련 예약
-            <span className="nav-badge">1회 15만원</span>
+            <span className="nav-badge">회당 15만원~</span>
           </button>
           <button
             className={`nav-link ${activeTab === 'app-store' || activeTab === 'appstore' ? 'active' : ''}`}
