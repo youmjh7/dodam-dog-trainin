@@ -36,33 +36,13 @@ export const initialPets = [
 export const initialTrainers = [
   {
     id: 'tr-1',
-    name: '강성훈 헤드 트레이너',
-    title: '반려견 행동교정 1급 / 12년 경력',
-    rating: 4.98,
-    reviewsCount: 342,
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80',
-    specialties: ['1:1 방문 훈련', '공격성 교정', '분리불안 케어'],
-    bio: 'EBS 펫 행동 분석 자문위원 출신. 보호자와 반려견이 서로 신뢰하며 행복하게 동행할 수 있도록 맞춤형 긍정 강화 솔루션을 제공합니다.'
-  },
-  {
-    id: 'tr-2',
-    name: '이수진 수석 훈련사',
-    title: '퍼피 교육 & 소형견 행동 전문가',
-    rating: 4.95,
-    reviewsCount: 218,
+    name: '염정화 대표 훈련사',
+    title: '도담 1:1 방문 훈련 대표 / 행동교정 전문가',
+    rating: 4.99,
+    reviewsCount: 480,
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
-    specialties: ['퍼피 맘 케어', '배변/산책 훈련', '소리 적응'],
-    bio: '소형견의 섬세한 심리를 이해하는 1:1 맞춰진 부드러운 핸들링 전문가. 어릴 때 바른 습관을 잡아주는 골든타임 훈련을 책임집니다.'
-  },
-  {
-    id: 'tr-3',
-    name: '박진우 대형견 전문가',
-    title: '경찰견/대형견 훈련 자격보유',
-    rating: 4.97,
-    reviewsCount: 189,
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
-    specialties: ['대형견 제어', '산책 리드줄 트레이닝', '사회화 세션'],
-    bio: '대형견 및 활동량이 많은 중형견의 리드줄 제어와 타인/타견과의 평화로운 산책 트레이닝 전문.'
+    specialties: ['1:1 맞춤 방문 훈련', '소리 짖음/벨 반응', '산책 당김/분리불안'],
+    bio: '도담 방문 훈련 전담 대표 전문가. 안산 부곡동 출발 1:1 현장 방문으로 보호자 및 반려견 맞춤형 긍정 교정 솔루션을 제공합니다.'
   }
 ];
 

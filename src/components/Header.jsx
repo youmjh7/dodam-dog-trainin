@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
+import { DodamLogo } from './DodamLogo';
 import { Dog, Calendar, MessageSquare, Sparkles, Crown, UserPlus, ChevronDown, PlusCircle, Smartphone } from 'lucide-react';
 
 export const Header = () => {
@@ -20,9 +21,7 @@ export const Header = () => {
       <div className="container header-content">
         {/* Brand Logo */}
         <div className="logo-group" onClick={() => setActiveTab('home')}>
-          <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', border: '2px solid #10B981' }}>
-            🐶
-          </div>
+          <DodamLogo size={42} />
           <div className="logo-text-group">
             <span className="logo-title font-heading">도담</span>
             <span className="logo-sub">DODAM · 방문 반려견 훈련 서비스</span>

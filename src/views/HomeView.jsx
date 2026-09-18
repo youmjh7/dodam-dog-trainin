@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { initialTrainers } from '../context/AppContext';
+import { DodamLogo } from '../components/DodamLogo';
 import { ShieldCheck, Calendar, MessageSquare, Sparkles, Star, Award, CheckCircle, ArrowRight, Zap, Crown } from 'lucide-react';
 
 export const HomeView = () => {
@@ -12,20 +12,7 @@ export const HomeView = () => {
       <section className="hero-section">
         <div className="container hero-container">
           <div style={{ textAlign: 'center', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ 
-              width: '110px', 
-              height: '110px', 
-              borderRadius: '50%', 
-              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              border: '3px solid #10B981', 
-              boxShadow: '0 0 30px rgba(16, 185, 129, 0.5)',
-              fontSize: '3.2rem'
-            }}>
-              🐶
-            </div>
+            <DodamLogo size={110} />
           </div>
 
           <div className="hero-badge pulse-element">
@@ -162,49 +149,6 @@ export const HomeView = () => {
                 AI 스튜디오 체험하기
               </button>
             </div>
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* Certified Trainers Showcase */}
-      <section className="trainers-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">TRAINERS</span>
-            <h2>검증된 1:1 전문 훈련사 라인업</h2>
-            <p>공인 자격증과 수년간의 현장 경험을 갖춘 베테랑 트레이너</p>
-          </div>
-
-          <div className="trainers-grid">
-            {initialTrainers.map((tr) => (
-              <div key={tr.id} className="trainer-card glass-card">
-                <div className="trainer-img-wrapper">
-                  <img src={tr.image} alt={tr.name} className="trainer-img" />
-                  <div className="trainer-rating-badge">
-                    <Star size={14} color="#F59E0B" fill="#F59E0B" />
-                    <span>{tr.rating} ({tr.reviewsCount})</span>
-                  </div>
-                </div>
-                <div className="trainer-body">
-                  <h3 className="trainer-name">{tr.name}</h3>
-                  <span className="trainer-title">{tr.title}</span>
-                  <div className="specialty-chips">
-                    {tr.specialties.map((sp, idx) => (
-                      <span key={idx} className="badge badge-orange">{sp}</span>
-                    ))}
-                  </div>
-                  <p className="trainer-bio">{tr.bio}</p>
-                  <button
-                    className="btn btn-secondary btn-sm btn-full"
-                    onClick={() => setActiveTab('booking')}
-                  >
-                    이 훈련사로 예약 (15만원)
-                  </button>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
