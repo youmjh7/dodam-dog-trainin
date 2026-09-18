@@ -23,7 +23,7 @@ export const RegisterAppModal = ({ isOpen, onClose }) => {
       return;
     }
 
-    const defaultIcon = formData.icon.trim() || 'C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg';
+    const defaultIcon = formData.icon.trim() || '/dodam_mascot.jpg';
 
     addCustomApp({
       ...formData,

@@ -12,8 +12,10 @@ export const HomeView = () => {
       <section className="hero-section">
         <div className="container hero-container">
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" alt="도담 마스코트" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #10B981', boxShadow: '0 0 30px rgba(16, 185, 129, 0.45)' }} />
-                <div className="hero-badge pulse-element">
+            <img src="/dodam_mascot.jpg" alt="도담 마스코트" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #10B981', boxShadow: '0 0 30px rgba(16, 185, 129, 0.45)' }} />
+          </div>
+
+          <div className="hero-badge pulse-element">
             <ShieldCheck size={16} color="#FF8800" />
             <span>1회 방문: 20만원 / 2회 이상: 회당 15만원 · 경기도 안산시 출발 (km당 2천원)</span>
           </div>
@@ -49,14 +51,6 @@ export const HomeView = () => {
             <div className="stat-card">
               <span className="stat-num">km당 2,000원</span>
               <span className="stat-label">경기도 안산시 출발 거리 출장비</span>
-            </div>lassName="hero-stats-grid">
-            <div className="stat-card">
-              <span className="stat-num">20만원 / 15만원</span>
-              <span className="stat-label">1회 20만 / 2회이상 회당 15만</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-num">km당 2,000원</span>
-              <span className="stat-label">안산 부곡동 출발 거리 출장비</span>
             </div>
             <div className="stat-card">
               <span className="stat-num">4.9 / 5.0</span>

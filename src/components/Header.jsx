@@ -20,7 +20,7 @@ export const Header = () => {
       <div className="container header-content">
         {/* Brand Logo */}
         <div className="logo-group" onClick={() => setActiveTab('home')}>
-          <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" alt="도담 로고" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
+          <img src="/dodam_mascot.jpg" alt="도담 로고" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
           <div className="logo-text-group">
             <span className="logo-title font-heading">도담</span>
             <span className="logo-sub">DODAM · 방문 반려견 훈련 서비스</span>

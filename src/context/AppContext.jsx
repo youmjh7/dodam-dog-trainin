@@ -287,7 +287,7 @@ export const AppProvider = ({ children }) => {
         id: 'app-1',
         title: '도담 1:1 방문 훈련 & 출장비 계산기',
         category: '훈련 & 케어',
-        icon: 'C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg',
+        icon: '/dodam_mascot.jpg',
         description: '염정화 행동교정 전문가의 안산 출발 거리에 따른 1:1 방문 훈련 신청 및 투명 출장비 자동 계산기 앱',
         appUrl: '#booking',
         badge: '공식 앱',

@@ -45,7 +45,7 @@ export const PwaInstallBanner = () => {
     return (
       <div style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)', border: '1px solid #10B981', borderRadius: '14px', padding: '14px 18px', margin: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" alt="도담 앱" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
+          <img src="/dodam_mascot.jpg" alt="도담 앱" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
           <div>
             <div style={{ fontWeight: 'bold', fontSize: '0.96rem', color: '#FFF' }}>📱 스마트폰 전용 '도담' 공식 앱 설치하기</div>
             <div style={{ fontSize: '0.82rem', color: '#94A3B8' }}>홈 화면 아이콘 등록으로 1초 만에 편리하게 방문 예약하세요!</div>
