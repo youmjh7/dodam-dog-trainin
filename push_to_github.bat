@@ -17,4 +17,4 @@ git push -u origin main
 echo ==========================================
 echo Upload completed!
 echo ==========================================
-pause
+
