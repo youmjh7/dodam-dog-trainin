@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>도담 (DODAM) - 1:1 방문 반려견 훈련 서비스 & 스마트 캘린더</title>
+  <link rel="icon" type="image/jpeg" href="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="도담" />
+  <link rel="apple-touch-icon" href="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" />
+  <meta name="theme-color" content="#10B981" />
+  <meta name="description" content="전문 강아지 방문 훈련 1회 15만원, 달력에서 날짜 클릭 방문 예약, 경기도 안산시 출발 자택 주소 거리 출장비 계산기!" />
+  <link rel="canonical" href="https://dodam.pe.kr" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="도담 (DODAM)" />
+  <meta property="og:title" content="도담 (DODAM) - 1:1 방문 반려견 훈련 서비스" />
+  <meta property="og:description" content="전문 훈련사의 1:1 방문 반려견 행동 교정 및 안산시 출발 출장비 자동 계산기" />
+  <meta property="og:url" content="https://dodam.pe.kr" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+  <!-- React & Babel CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    :root {
+      --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Outfit', 'Pretendard', sans-serif;
+      --bg-main: #0B0F17;
+      --bg-card: rgba(22, 30, 46, 0.8);
+      --bg-input: #151D2C;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --primary: #FF6B00;
+      --primary-hover: #E05D00;
+      --secondary: #F59E0B;
+      --accent-purple: #8B5CF6;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      line-height: 1.5;
+      padding-bottom: 75px;
+      word-break: keep-all;
+      word-wrap: break-word;
+    }
+    @media (min-width: 768px) { body { padding-bottom: 0; } }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .font-heading { font-family: var(--font-heading); }
+    .text-gradient {
+      background: linear-gradient(135deg, #FFF 20%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 600; font-size: 0.92rem; padding: 12px 20px; border-radius: var(--radius-md);
+      border: none; cursor: pointer; transition: all 0.2s; text-decoration: none; white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--primary) 0%, #FF8800 100%); color: #FFF; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.45); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.08); color: var(--text-main); border: 1px solid var(--border-color); }
+    .btn-accent { background: linear-gradient(135deg, var(--accent-purple) 0%, #6366F1 100%); color: #FFF; }
+    .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+    .btn-lg { padding: 14px 28px; font-size: 1.02rem; }
+    .btn-full { width: 100%; }
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px;
+      border-radius: var(--radius-full); font-size: 0.76rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+    }
+    .badge-orange { background: rgba(255, 107, 0, 0.15); color: #FF8800; border: 1px solid rgba(255, 107, 0, 0.3); }
+    .badge-purple { background: rgba(139, 92, 246, 0.15); color: #A78BFA; border: 1px solid rgba(139, 92, 246, 0.3); }
+    .badge-green { background: rgba(16, 185, 129, 0.15); color: #34D399; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 900; background: rgba(11, 15, 23, 0.9);
+      backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color);
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .brand-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .brand-title { font-size: 1.3rem; font-weight: 800; color: #FFF; white-space: nowrap; flex-shrink: 0; word-break: keep-all; }
+    .nav-links { display: none; gap: 4px; align-items: center; white-space: nowrap; flex-shrink: 0; }
+    @media (min-width: 860px) { .nav-links { display: flex; } }
+    .nav-btn { background: none; border: none; color: var(--text-muted); padding: 8px 12px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border-radius: var(--radius-md); white-space: nowrap; flex-shrink: 0; word-break: keep-all; display: inline-flex; align-items: center; gap: 4px; }
+    .nav-btn.active { color: #FFF; background: rgba(255, 107, 0, 0.12); border: 1px solid rgba(255, 107, 0, 0.3); }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; white-space: nowrap; flex-shrink: 0; }
+
+    /* Calendar Grid Styling */
+    .calendar-wrapper { margin-top: 10px; }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .calendar-header h4 { color: #FFF; font-size: 1.2rem; font-weight: bold; }
+    .calendar-nav-btn { background: rgba(255,255,255,0.08); border: 1px solid var(--border-color); color: #FFF; width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    .calendar-days-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.82rem; font-weight: bold; color: var(--text-muted); margin-bottom: 8px; }
+    .calendar-days-header div:first-child { color: #EF4444; } /* 일요일 */
+    .calendar-days-header div:last-child { color: #3B82F6; } /* 토요일 */
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+    .day-cell {
+      min-height: 52px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color);
+      border-radius: 10px; padding: 6px; display: flex; flex-direction: column; align-items: center;
+      justify-content: space-between; cursor: pointer; transition: all 0.15s; position: relative;
+    }
+    .day-cell:hover:not(.disabled) { border-color: var(--primary); background: rgba(255, 107, 0, 0.1); }
+    .day-cell.selected { border-color: var(--primary); background: var(--primary); color: #FFF !important; }
+    .day-cell.selected .day-num, .day-cell.selected .day-status { color: #FFF !important; }
+    .day-cell.disabled { opacity: 0.3; cursor: not-allowed; }
+    .day-num { font-size: 0.88rem; font-weight: bold; color: #FFF; }
+    .day-status { font-size: 0.65rem; color: #34D399; font-weight: 600; }
+    .day-cell.closed .day-status { color: #EF4444; }
+
+    /* Mobile Bottom Nav */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: #0F172A;
+      border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-around; z-index: 999;
+    }
+    @media (min-width: 768px) { .bottom-nav { display: none; } }
+    .b-tab { background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 0.7rem; cursor: pointer; flex: 1; }
+    .b-tab.active { color: var(--primary); font-weight: 700; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5, 8, 15, 0.8);
+      backdrop-filter: blur(6px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box { background: #111827; border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 520px; width: 100%; padding: 24px; max-height: 90vh; overflow-y: auto; }
+    .auth-tab-group { display: flex; background: rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 4px; margin-bottom: 16px; }
+    .auth-tab-btn { flex: 1; padding: 8px; border: none; background: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; cursor: pointer; border-radius: 8px; }
+    .auth-tab-btn.active { background: var(--primary); color: #FFF; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const initialPets = [
+      { id: 'pet-1', name: '마루', breed: '포메라니안', age: '2살', weight: '3.4kg', completedSessions: 1, image: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80', tags: ['분리불안', '소리 짖음'] },
+      { id: 'pet-2', name: '코코', breed: '골든 리트리버', age: '1살 6개월', weight: '24kg', completedSessions: 0, image: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=600&q=80', tags: ['배변 실수', '산책 당김'] }
+    ];
+
+    const initialMembersData = [
+      { id: 'm-1', name: '김보호자 (마루맘)', email: 'user@pawcoach.kr', phone: '010-1234-5678', petName: '마루', breed: '포메라니안', completedSessions: 1, address: '경기도 안산시 상록구 부곡동 123', memo: '소리 짖음 1회 수료 완료 (회당 15만원 우대 적용중)', joinDate: '2026-08-15' },
+      { id: 'm-2', name: '이보호자 (코코아빠)', email: 'coco@pawcoach.kr', phone: '010-9876-5432', petName: '코코', breed: '골든 리트리버', completedSessions: 0, address: '경기도 수원시 팔달구 매산로 45', memo: '신규 신청견. 산책 당김 집중 교정 예정.', joinDate: '2026-09-02' },
+      { id: 'm-3', name: '박보호자 (초코맘)', email: 'choco@pawcoach.kr', phone: '010-5555-7777', petName: '초코', breed: '푸들', completedSessions: 2, address: '서울특별시 강남구 테헤란로 88', memo: '2회 수료 완료. 매트 피신 성공적.', joinDate: '2026-07-10' },
+      { id: 'm-4', name: '최보호자 (루비맘)', email: 'ruby@pawcoach.kr', phone: '010-3333-4444', petName: '루비', breed: '비숑 프리제', completedSessions: 1, address: '경기도 군포시 산본동 500', memo: '1회 수료. 짖음 교정 양호.', joinDate: '2026-08-28' }
+    ];
+
+    const initialQuestions = [
+      {
+        id: 'q-101',
+        author: '마루맘',
+        dogName: '마루 (포메라니안)',
+        title: '현관 도어벨 소리만 나면 미친 듯이 짖어요 ㅠㅠ',
+        content: '벨이 울리면 문 앞으로 달려가서 크게 짖습니다. 1회 방문 훈련(20만원) 신청하기 전에 시도해볼 훈련이 있나요?',
+        date: '2026-09-15',
+        status: '답변완료',
+        answer: {
+          trainerName: '강성훈 헤드 트레이너',
+          text: '안녕하세요! 현관 벨소리는 강아지에게 [경계 신호]입니다. 벨 소리를 녹음해 작게 틀며 간식을 주는 탈감작 훈련을 해보세요. 완벽 교정을 위해 1회 방문 훈련(20만원) 세션에서 매트 피신 훈련을 직접 코칭해 드립니다.'
+        }
+      }
+    ];
+
+    const initialPhotos = [
+      {
+        id: 'photo-1',
+        author: '마루맘',
+        dogName: '마루',
+        breed: '포메라니안',
+        imageUrl: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80',
+        caption: '오늘 산책 다녀와서 신나게 웃고 있는 마루입니다! 🐾❤️',
+        likes: 24,
+        date: '2026-09-15'
+      }
+    ];
+
+    function calculateKmFromBugok(addressStr) {
+      if (!addressStr || addressStr.trim() === '') return 5;
+      const addr = addressStr.toLowerCase();
+      if (addr.includes('부곡동')) return 1;
+      if (addr.includes('안산')) return 6;
+      if (addr.includes('군포') || addr.includes('의왕')) return 11;
+      if (addr.includes('시흥') || addr.includes('안양')) return 13;
+      if (addr.includes('수원') || addr.includes('화성')) return 19;
+      if (addr.includes('부천') || addr.includes('광명')) return 23;
+      if (addr.includes('인천') || addr.includes('용인')) return 31;
+      if (addr.includes('서울') || addr.includes('강남') || addr.includes('서초') || addr.includes('마포') || addr.includes('송파')) return 36;
+      if (addr.includes('성남') || addr.includes('분당')) return 33;
+      if (addr.includes('고양') || addr.includes('파주') || addr.includes('남양주')) return 50;
+      return 25;
+    }
+
+    function App() {
+      const [activeTab, setActiveTab] = useState('home');
+      const [pets, setPets] = useState(initialPets);
+      const [activePet, setActivePet] = useState(initialPets[0]);
+      const [user, setUser] = useState({ name: '김보호자', email: 'user@pawcoach.kr', isLoggedIn: true });
+      const [showAuthModal, setShowAuthModal] = useState(false);
+      const [authTab, setAuthTab] = useState('signup');
+      const [authStep, setAuthStep] = useState(1);
+      const [authForm, setAuthForm] = useState({ name: '', email: '', password: '', confirmPassword: '', phone: '', dogName: '', dogBreed: '포메라니안', dogAge: '2', agreeTerms: false, agreePrivacy: false });
+
+      // Calendar & Booking State (하루 오전 1팀, 오후 1팀 제한)
+      const [selectedSessionCount, setSelectedSessionCount] = useState(1);
+      const [targetAddress, setTargetAddress] = useState('경기도 안산시 상록구 부곡동 123');
+      const [calculatedKm, setCalculatedKm] = useState(1);
+      const [calendarMonth, setCalendarMonth] = useState(9); // 9월 or 10월
+      const [selectedDate, setSelectedDate] = useState('2026-09-24');
+      const [selectedTimeSlot, setSelectedTimeSlot] = useState('14:00 - 15:30');
+
+      // 관리자 달력 일정 수정 모드 State & 휴대폰 SMS 인증번호 / 비밀번호 (@4865) 보안
+      const [isAdminMode, setIsAdminMode] = useState(false);
+      const [adminEditDate, setAdminEditDate] = useState(null);
+      const [showAdminPwModal, setShowAdminPwModal] = useState(false);
+      const [adminPwInput, setAdminPwInput] = useState('');
+
+      // 휴대폰 SMS 인증번호 State
+      const [adminAuthTab, setAdminAuthTab] = useState('sms'); // 'sms' or 'pw'
+      const [adminPhone, setAdminPhone] = useState('010-1234-5678');
+      const [smsSent, setSmsSent] = useState(false);
+      const [smsCode, setSmsCode] = useState('');
+      const [userInputCode, setUserInputCode] = useState('');
+
+      // 관리자 회원 정보 관리 State
+      const [members, setMembers] = useState(initialMembersData);
+      const [memberSearchQuery, setMemberSearchQuery] = useState('');
+      const [showAdminMemberModal, setShowAdminMemberModal] = useState(false);
+      const [showAddMemberForm, setShowAddMemberForm] = useState(false);
+      const [newMemberForm, setNewMemberForm] = useState({ name: '', phone: '', email: '', petName: '', breed: '', completedSessions: 0, address: '', memo: '' });
+
+      const handleAdminAccessClick = () => {
+        if (isAdminMode) {
+          setIsAdminMode(false);
+          alert('🔒 관리자 수정 모드가 해제되었습니다.');
+        } else {
+          setAdminPwInput('');
+          setUserInputCode('');
+          setSmsSent(false);
+          setShowAdminPwModal(true);
+        }
+      };
+
+      const handleSendSmsCode = () => {
+        if (!adminPhone || adminPhone.trim().length < 10) {
+          alert('휴대폰 번호를 올바르게 입력해주세요.');
+          return;
+        }
+        const generated = String(Math.floor(1000 + Math.random() * 9000));
+        setSmsCode(generated);
+        setUserInputCode(generated);
+        setSmsSent(true);
+        alert(`📱 [문자 메시지 알림 수신]\n\n[도담 1:1 방문훈련]\n관리자 접속 인증번호는 [ ${generated} ] 입니다.\n(${adminPhone} 번호로 발송 완료)`);
+      };
+
+      const handleVerifySmsCode = (e) => {
+        e.preventDefault();
+        if (userInputCode === smsCode && smsCode !== '') {
+          setIsAdminMode(true);
+          setShowAdminPwModal(false);
+          setSmsSent(false);
+          setUserInputCode('');
+          alert('🔓 휴대폰 문자 본인 인증 성공! 관리자 권한이 부여되었습니다.');
+        } else {
+          alert('❌ 인증번호가 올바르지 않습니다. 수신된 4자리 인증번호를 확인해주세요.');
+        }
+      };
+
+      const handleAdminPwSubmit = (e) => {
+        e.preventDefault();
+        if (adminPwInput === '@4865') {
+          setIsAdminMode(true);
+          setShowAdminPwModal(false);
+          alert('🔓 관리자 인증 성공! (비밀번호: @4865)\n\n달력 일정 수정 및 회원 정보 관리 기능을 사용할 수 있습니다.');
+        } else {
+          alert('❌ 비밀번호가 올바르지 않습니다. (비밀번호: @4865)');
+        }
+      };
+
+      // 회원 수료 횟수 변경 함수
+      const handleUpdateCompletedSessions = (memberId, delta) => {
+        setMembers(prev => prev.map(m => {
+          if (m.id === memberId) {
+            const nextVal = Math.max(0, m.completedSessions + delta);
+            // activePet도 동일 강아지인 경우 동기화
+            if (activePet && activePet.name === m.petName) {
+              setActivePet(p => ({ ...p, completedSessions: nextVal }));
+            }
+            return { ...m, completedSessions: nextVal };
+          }
+          return m;
+        }));
+      };
+
+      // 회원 메모 수정 함수
+      const handleSaveMemberMemo = (memberId, newMemo) => {
+        setMembers(prev => prev.map(m => m.id === memberId ? { ...m, memo: newMemo } : m));
+        alert('💾 회원 메모가 성공적으로 저장되었습니다!');
+      };
+
+      // 회원 수동 추가 함수
+      const handleAddMemberSubmit = (e) => {
+        e.preventDefault();
+        if (!newMemberForm.name || !newMemberForm.petName) {
+          alert('회원 이름과 반려견 이름을 입력해주세요.');
+          return;
+        }
+        const newEntry = {
+          id: `m-${Date.now()}`,
+          ...newMemberForm,
+          completedSessions: Number(newMemberForm.completedSessions) || 0,
+          joinDate: new Date().toISOString().split('T')[0]
+        };
+        setMembers(prev => [newEntry, ...prev]);
+        setShowAddMemberForm(false);
+        setNewMemberForm({ name: '', phone: '', email: '', petName: '', breed: '', completedSessions: 0, address: '', memo: '' });
+        alert(`🎉 신규 회원 [${newEntry.name} / ${newEntry.petName}] 님이 정상 등록되었습니다!`);
+      };
+
+      // 회원 삭제 함수
+      const handleDeleteMember = (memberId, name) => {
+        if (confirm(`정말로 회원 [${name}] 님을 관리자 데이터에서 삭제하시겠습니까?`)) {
+          setMembers(prev => prev.filter(m => m.id !== memberId));
+          alert('회원이 삭제되었습니다.');
+        }
+      };
+
+      // 날짜별 오전 1팀 / 오후 1팀 예약 현황 관리
+      const [bookedSchedule, setBookedSchedule] = useState({
+        '2026-09-18': { am: true, pm: false },  // 오전 마감, 오후 1팀 가능
+        '2026-09-20': { am: false, pm: true },  // 오전 1팀 가능, 오후 마감
+        '2026-09-22': { am: true, pm: true },   // 오전/오후 모두 완료 (전체 마감)
+        '2026-09-25': { am: true, pm: false },
+        '2026-10-10': { am: false, pm: true },
+      });
+
+      const [questions, setQuestions] = useState(initialQuestions);
+      const [photos, setPhotos] = useState(initialPhotos);
+
+      // Modal State
+      const [showPayModal, setShowPayModal] = useState(false);
+      const [payDetails, setPayDetails] = useState({ title: '', basePrice: 200000, distanceKm: 1, travelFee: 2000, totalPrice: 202000, date: '', time: '' });
+
+      useEffect(() => {
+        const estimated = calculateKmFromBugok(targetAddress);
+        setCalculatedKm(estimated);
+      }, [targetAddress]);
+
+      // 1회 이상 훈련 수료 강아지이거나 2회 이상 신청 시 회당 15만원 자동 할인!
+      const hasCompletedBefore = activePet && (activePet.completedSessions >= 1);
+      const isDiscountApplied = hasCompletedBefore || selectedSessionCount >= 2;
+      const baseFeePerSession = isDiscountApplied ? 150000 : 200000;
+      const totalTrainingFee = baseFeePerSession * selectedSessionCount;
+      const totalTravelFee = calculatedKm * 2000;
+      const grandTotalFee = totalTrainingFee + totalTravelFee;
+
+      const triggerPayment = (title) => {
+        setPayDetails({
+          title,
+          basePrice: totalTrainingFee,
+          distanceKm: calculatedKm,
+          travelFee: totalTravelFee,
+          totalPrice: grandTotalFee,
+          date: selectedDate,
+          time: selectedTimeSlot
+        });
+        setShowPayModal(true);
+      };
+
+      // 결제 완료 시 해당 날짜의 오전/오후 예약 슬롯 확정 처리 & 반려견 수료 횟수 증가
+      const handleConfirmBooking = () => {
+        const isAmSlot = selectedTimeSlot.startsWith('10:00');
+        setBookedSchedule(prev => ({
+          ...prev,
+          [selectedDate]: {
+            am: isAmSlot ? true : (prev[selectedDate]?.am || false),
+            pm: !isAmSlot ? true : (prev[selectedDate]?.pm || false),
+          }
+        }));
+
+        // 반려견 수료 횟수 1 증가 (다음 훈련 시 1회만 예약해도 자동으로 15만원 우대 적용!)
+        setActivePet(prev => ({
+          ...prev,
+          completedSessions: (prev.completedSessions || 0) + selectedSessionCount
+        }));
+
+        alert(`🎉 ${selectedDate} ${selectedTimeSlot} 방문 훈련 예약이 확정되었습니다!\n\n🐶 ${activePet.name}의 다음 훈련부터는 15만원 우대가격(5만원 자동 할인)이 지속 적용됩니다!`);
+        setShowPayModal(false);
+        setActiveTab('profile');
+      };
+
+      // Calendar Days Generator (September / October 2026)
+      const calendarDays = [];
+      const totalDaysInMonth = calendarMonth === 9 ? 30 : 31;
+      const firstDayOffset = calendarMonth === 9 ? 2 : 4; // 9월 1일 화(2), 10월 1일 목(4)
+
+      for (let i = 0; i < firstDayOffset; i++) {
+        calendarDays.push({ day: null, dateStr: null, disabled: true });
+      }
+      for (let d = 1; d <= totalDaysInMonth; d++) {
+        const monthStr = calendarMonth < 10 ? '0' + calendarMonth : calendarMonth;
+        const dayStr = d < 10 ? '0' + d : d;
+        const dateStr = `2026-${monthStr}-${dayStr}`;
+        const defaultClosed = (calendarMonth === 9 && (d === 15 || d === 22)) || (calendarMonth === 10 && (d === 13 || d === 27));
+        const sched = bookedSchedule[dateStr] || { am: false, pm: false };
+        const fullyBooked = defaultClosed || (sched.am && sched.pm);
+
+        calendarDays.push({
+          day: d,
+          dateStr,
+          closed: fullyBooked,
+          sched,
+          disabled: false
+        });
+      }
+
+      return (
+        <div>
+          {/* Header */}
+          <header className="header">
+            <div className="container header-inner">
+              <div className="brand" onClick={() => setActiveTab('home')} style={{ display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" alt="도담 로고" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
+                <div className="brand-title font-heading" style={{ whiteSpace: 'nowrap', wordBreak: 'keep-all', flexShrink: 0 }}>도담</div>
+              </div>
+
+              <div className="nav-links" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+                <button className={`nav-btn ${activeTab === 'home' ? 'active' : ''}`} onClick={() => setActiveTab('home')} style={{ whiteSpace: 'nowrap' }}>홈</button>
+                <button className={`nav-btn ${activeTab === 'booking' ? 'active' : ''}`} onClick={() => setActiveTab('booking')} style={{ whiteSpace: 'nowrap' }}>📅 예약 캘린더 & 거리계산기</button>
+                <button className={`nav-btn ${activeTab === 'appstore' ? 'active' : ''}`} onClick={() => setActiveTab('appstore')} style={{ background: activeTab === 'appstore' ? '#10B981' : 'transparent', color: activeTab === 'appstore' ? '#FFF' : '#10B981', border: '1px solid #10B981', whiteSpace: 'nowrap' }}>📱 도담앱스토어</button>
+                <button className={`nav-btn ${activeTab === 'qna' ? 'active' : ''}`} onClick={() => setActiveTab('qna')} style={{ whiteSpace: 'nowrap' }}>❓ Q&A 질문란</button>
+                <button className={`nav-btn ${activeTab === 'photoboard' ? 'active' : ''}`} onClick={() => setActiveTab('photoboard')} style={{ whiteSpace: 'nowrap' }}>📸 강아지 포토</button>
+                <button className={`nav-btn ${activeTab === 'profile' ? 'active' : ''}`} onClick={() => setActiveTab('profile')} style={{ whiteSpace: 'nowrap' }}>내 반려견</button>
+              </div>
+
+              <div className="header-actions">
+                <button className="btn btn-primary btn-sm" onClick={() => setShowAuthModal(true)}>
+                  🔑 회원가입 / 로그인
+                </button>
+                {user.isLoggedIn && (
+                  <button className="btn btn-secondary btn-sm" onClick={() => setActiveTab('profile')}>
+                    👤 {user.name}
+                  </button>
+                )}
+              </div>
+            </div>
+          </header>
+
+          {/* Main Views */}
+          <main style={{ paddingTop: '30px', paddingBottom: '40px' }}>
+            {/* Home View */}
+            {activeTab === 'home' && (
+              <div className="container">
+                <div style={{ textAlign: 'center', margin: '30px 0 50px 0' }}>
+                  <div style={{ display: 'inline-block', marginBottom: '16px' }}>
+                    <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" alt="도담 마스코트" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #10B981', boxShadow: '0 0 30px rgba(16, 185, 129, 0.45)' }} />
+                  </div>
+                  <h1 style={{ fontSize: '2.6rem', margin: '12px 0', color: '#FFF' }}>
+                    우리 강아지 맞춤 1:1 방문 훈련<br />
+                    <span className="text-gradient">전문 훈련사가 댁으로 직접 찾아갑니다</span>
+                  </h1>
+                  <p style={{ color: 'var(--text-muted)', marginBottom: '28px', fontSize: '1.05rem' }}>
+                    소리 짖음, 현관 경계, 분리불안, 산책 당김 1:1 맞춤 현장 솔루션 제공
+                  </p>
+
+                  {/* Important Notice Card */}
+                  <div style={{ background: 'rgba(255, 107, 0, 0.1)', border: '1px solid #FF8800', borderRadius: '16px', padding: '20px', maxWidth: '780px', margin: '0 auto 30px auto', textAlign: 'left' }}>
+                    <div style={{ color: '#FF8800', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '6px' }}>
+                      🚨 [훈련 범위 & 원칙] 도담 1:1 방문 훈련 필독 안내
+                    </div>
+                    <div style={{ color: '#FFF', fontSize: '1.02rem', fontWeight: 'bold', marginBottom: '4px' }}>
+                      🚫 대소변 훈련 미진행 | ❌ 간식 유혹·유인 훈련 NO! | ⭕ 바른 목줄(리드줄) 훈련 OK!
+                    </div>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: 0, lineHeight: '1.5' }}>
+                      <strong>※ 대소변 훈련은 진행하지 않습니다.</strong> 소리 짖음, 외부인 경계, 분리불안, 산책 당김 교정을 전문으로 합니다.<br />
+                      간식 유인이 아닌 보호자님과의 바른 리드워크(목줄) 훈련으로 문제 행동을 근본 교정하며, <strong>교정 성공 후 올바른 행동에 대한 긍정 보상 간식은 정상 지급합니다!</strong>
+                    </p>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '20px' }}>
+                  <div className="glass-card">
+                    <h3 style={{ color: '#FFF', marginBottom: '8px' }}>1회 원포인트 방문 훈련</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>90분간 목줄 리드워크, 벨 반응, 매트 훈련 집중 교정 (대소변 훈련 제외 / 성공 시 보상 지급)</p>
+                    <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '16px' }}>200,000원 (+ 거리 출장비)</div>
+                    <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>📅 날짜 선택하고 예약하기</button>
+                  </div>
+
+                  <div className="glass-card" onClick={() => setActiveTab('qna')} style={{ cursor: 'pointer' }}>
+                    <span className="badge badge-purple" style={{ marginBottom: '8px' }}>Q&A 커뮤니티</span>
+                    <h3 style={{ color: '#FFF', marginBottom: '8px' }}>❓ 회원 맞춤 질문 게시판</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>궁금한 문제 행동을 질문하고 전문 훈련사의 답변을 받아보세요.</p>
+                    <button className="btn btn-secondary btn-full">질문 게시판 이동</button>
+                  </div>
+
+                  <div className="glass-card" onClick={() => setActiveTab('photoboard')} style={{ cursor: 'pointer' }}>
+                    <span className="badge badge-orange" style={{ marginBottom: '8px' }}>PHOTO GALLERY</span>
+                    <h3 style={{ color: '#FFF', marginBottom: '8px' }}>📸 우리 강아지 포토 갤러리</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>사랑스러운 강아지 사진을 자랑하고 하트를 받으세요!</p>
+                    <button className="btn btn-accent btn-full">포토 갤러리 구경하기</button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Booking View with Interactive Calendar */}
+            {activeTab === 'booking' && (
+              <div className="container" style={{ maxWidth: '820px' }}>
+                <div className="glass-card">
+                  <h2 style={{ color: '#FFF', marginBottom: '8px' }}>📅 1:1 방문 훈련 날짜 선택 예약 캘린더</h2>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '16px' }}>
+                    원하시는 방문 날짜와 시간대를 달력에서 클릭해 주세요.
+                  </p>
+
+                  {/* Red Important Notice Banner */}
+                  <div style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid #EF4444', borderRadius: '12px', padding: '16px', marginBottom: '24px' }}>
+                    <div style={{ color: '#F87171', fontWeight: 'bold', fontSize: '1.02rem', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      📌 [중요 필독 사항] 훈련 범위 및 방식 안내
+                    </div>
+                    <div style={{ color: '#FFF', fontSize: '0.95rem', fontWeight: 'bold' }}>
+                      🚫 대소변 훈련 미진행 | ❌ 간식 유혹·유인 훈련 NO! | ⭕ 바른 목줄(리드줄) 훈련 OK!
+                    </div>
+                    <p style={{ color: '#E2E8F0', fontSize: '0.85rem', margin: '4px 0 0 0', lineHeight: '1.5' }}>
+                      ※ <strong>대소변 훈련은 진행하지 않습니다.</strong> 짖음, 경계, 산책 당김 교정에 집중하며, 훈련 성공 시 칭찬 보상 간식은 정상 제공됩니다.
+                    </p>
+                  </div>
+
+                  {/* Monthly Calendar Component */}
+                  <div style={{ background: '#151D2C', padding: '20px', borderRadius: '16px', marginBottom: '24px', border: '1px solid var(--border-color)' }}>
+                    <div className="calendar-header">
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <button className="calendar-nav-btn" onClick={() => setCalendarMonth(m => Math.max(9, m - 1))}>◀</button>
+                        <h4 style={{ margin: 0 }}>🗓️ 2026년 {calendarMonth}월 방문 가능 달력</h4>
+                        <button className="calendar-nav-btn" onClick={() => setCalendarMonth(m => Math.min(10, m + 1))}>▶</button>
+                      </div>
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <button
+                          type="button"
+                          onClick={handleAdminAccessClick}
+                          style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '0.8rem', cursor: 'pointer', opacity: 0.6, display: 'flex', alignItems: 'center', gap: '4px' }}
+                          title="관리자 인증 (휴대폰 SMS 인증)"
+                        >
+                          🔒 {isAdminMode ? '⚙️ [관리자 수정 ON (종료)]' : '관리자'}
+                        </button>
+                        {isAdminMode && (
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-accent"
+                            onClick={() => setShowAdminMemberModal(true)}
+                            style={{ fontSize: '0.78rem', padding: '4px 10px' }}
+                          >
+                            👥 회원 관리
+                          </button>
+                        )}
+                        <span className="badge badge-green">선택 날짜: {selectedDate}</span>
+                      </div>
+                    </div>
+
+                    {/* Admin Edit Mode Banner */}
+                    {isAdminMode && (
+                      <div style={{ background: 'rgba(139, 92, 246, 0.18)', border: '1px solid #8B5CF6', padding: '14px 16px', borderRadius: '12px', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                        <div>
+                          <div style={{ color: '#DDD6FE', fontWeight: 'bold', fontSize: '0.92rem' }}>
+                            ⚙️ [관리자 모드 활성화 중 - 휴대폰 SMS 인증]
+                          </div>
+                          <div style={{ color: '#A78BFA', fontSize: '0.82rem' }}>
+                            달력 날짜를 클릭하여 예약 마감/오픈을 조작하거나, 회원 정보와 훈련 수료 이력을 직접 관리할 수 있습니다.
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-accent"
+                            onClick={() => setShowAdminMemberModal(true)}
+                          >
+                            👥 회원 정보 & 수료 관리 센터
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-secondary"
+                            onClick={() => {
+                              setIsAdminMode(false);
+                              alert('🔒 관리자 모드가 해제되었습니다.');
+                            }}
+                          >
+                            🔒 관리자 해제
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="calendar-days-header">
+                      <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+                    </div>
+
+                    <div className="calendar-grid">
+                      {calendarDays.map((cd, idx) => {
+                        if (cd.disabled) {
+                          return <div key={idx} className="day-cell disabled" />;
+                        }
+                        const isSelected = selectedDate === cd.dateStr;
+                        const sched = bookedSchedule[cd.dateStr] || { am: false, pm: false };
+                        let statusText = '2팀 가능';
+                        let statusColor = '#34D399';
+                        if (cd.closed || (sched.am && sched.pm)) {
+                          statusText = '마감';
+                          statusColor = '#EF4444';
+                        } else if (sched.am && !sched.pm) {
+                          statusText = '오후 1팀';
+                          statusColor = '#F59E0B';
+                        } else if (!sched.am && sched.pm) {
+                          statusText = '오전 1팀';
+                          statusColor = '#F59E0B';
+                        }
+
+                        return (
+                          <div
+                            key={idx}
+                            className={`day-cell ${isSelected ? 'selected' : ''} ${cd.closed ? 'closed' : ''}`}
+                            style={{ border: isAdminMode ? '1px dashed #8B5CF6' : undefined }}
+                            onClick={() => {
+                              if (isAdminMode) {
+                                setAdminEditDate(cd.dateStr);
+                              } else if (!cd.closed) {
+                                setSelectedDate(cd.dateStr);
+                                if (sched.am && !sched.pm) setSelectedTimeSlot('14:00 - 15:30');
+                                else if (!sched.am && sched.pm) setSelectedTimeSlot('10:00 - 11:30');
+                              } else {
+                                alert('해당 날짜는 오전/오후 2팀 예약이 모두 마감되었습니다.');
+                              }
+                            }}
+                          >
+                            <span className="day-num">{cd.day}</span>
+                            <span className="day-status" style={{ color: statusColor }}>{statusText}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* AM / PM Time Slot Selector */}
+                    {(() => {
+                      const curSched = bookedSchedule[selectedDate] || { am: false, pm: false };
+                      return (
+                        <div style={{ marginTop: '20px', borderTop: '1px dashed var(--border-color)', paddingTop: '16px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                            <label style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: 0, fontWeight: 'bold' }}>
+                              ⏰ 1일 2팀 정원 (오전 1팀 + 오후 1팀) 시간대 선택 [{selectedDate}]
+                            </label>
+                            <span className="badge badge-purple" style={{ fontSize: '0.75rem' }}>
+                              {curSched.am && curSched.pm ? '❌ 전체 마감' : curSched.am ? '☀️ 오전마감 / 🌙 오후가능' : curSched.pm ? '☀️ 오전가능 / 🌙 오후마감' : '✨ 오전/오후 모두 가능 (2팀)'}
+                            </span>
+                          </div>
+
+                          {/* Morning Session Group */}
+                          <div style={{ marginBottom: '12px' }}>
+                            <div style={{ fontSize: '0.8rem', color: '#F59E0B', fontWeight: 'bold', marginBottom: '6px' }}>☀️ 오전 훈련 타임 (1팀 정원)</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
+                              {['10:00 - 11:30'].map((slot) => {
+                                const isAmBooked = curSched.am;
+                                const isSlotActive = selectedTimeSlot === slot;
+                                return (
+                                  <button
+                                    key={slot}
+                                    type="button"
+                                    disabled={isAmBooked}
+                                    className={`btn btn-sm ${isSlotActive ? 'btn-primary' : 'btn-secondary'}`}
+                                    style={{ opacity: isAmBooked ? 0.4 : 1, textDecoration: isAmBooked ? 'line-through' : 'none' }}
+                                    onClick={() => setSelectedTimeSlot(slot)}
+                                  >
+                                    {slot} {isAmBooked ? '(오전 마감)' : ''}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Afternoon Session Group */}
+                          <div>
+                            <div style={{ fontSize: '0.8rem', color: '#3B82F6', fontWeight: 'bold', marginBottom: '6px' }}>🌙 오후 훈련 타임 (1팀 정원)</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                              {['13:00 - 14:30', '15:30 - 17:00', '19:00 - 20:30'].map((slot) => {
+                                const isPmBooked = curSched.pm;
+                                const isSlotActive = selectedTimeSlot === slot;
+                                return (
+                                  <button
+                                    key={slot}
+                                    type="button"
+                                    disabled={isPmBooked}
+                                    className={`btn btn-sm ${isSlotActive ? 'btn-primary' : 'btn-secondary'}`}
+                                    style={{ opacity: isPmBooked ? 0.4 : 1, textDecoration: isPmBooked ? 'line-through' : 'none' }}
+                                    onClick={() => setSelectedTimeSlot(slot)}
+                                  >
+                                    {slot} {isPmBooked ? '(오후 마감)' : ''}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </div>
+
+                  {/* Repeat Dog VIP Discount Badge Banner */}
+                  {hasCompletedBefore && (
+                    <div style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid #10B981', borderRadius: '12px', padding: '14px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '1.4rem' }}>🎁</span>
+                      <div>
+                        <div style={{ color: '#10B981', fontWeight: 'bold', fontSize: '0.95rem' }}>
+                          수료견 자동 15만원 우대 적용: 🐶 {activePet.name} (누적 {activePet.completedSessions}회 수료)
+                        </div>
+                        <div style={{ color: '#E2E8F0', fontSize: '0.85rem' }}>
+                          이전에 1회 이상 훈련을 받은 강아지는 <strong>다음 훈련 예약 시 1회만 신청하셔도 회당 15만원(5만원 할인)</strong> 혜택이 자동 적용됩니다!
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Distance & Address Inputs */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>1. 훈련 횟수 선택 ({hasCompletedBefore ? '수료견 15만원 우대적용!' : '2회 이상 회당 15만원'})</label>
+                      <select
+                        value={selectedSessionCount}
+                        onChange={e => setSelectedSessionCount(Number(e.target.value))}
+                        style={{ width: '100%', padding: '12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                      >
+                        <option value={1}>{hasCompletedBefore ? `1회 재방문 우대 (150,000원) [수료견 5만원 할인!]` : `1회 단독 방문 (200,000원)`}</option>
+                        <option value={2}>2회 연속 패키지 (회당 15만원 = 300,000원) [회당 5만원 할인!]</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>2. 산출 거리 km (수정 가능)</label>
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <input
+                          type="number"
+                          value={calculatedKm}
+                          onChange={e => setCalculatedKm(Number(e.target.value))}
+                          style={{ width: '100%', padding: '12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FF8800', fontWeight: 'bold', borderRadius: '8px' }}
+                        />
+                        <span style={{ color: '#FFF', fontWeight: 'bold' }}>km</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>3. 방문 희망 자택 주소 입력</label>
+                    <input
+                      type="text"
+                      placeholder="예: 경기도 안산시 상록구 부곡동 123, 서울시 서초구 반포동 100"
+                      value={targetAddress}
+                      onChange={e => setTargetAddress(e.target.value)}
+                      style={{ width: '100%', padding: '12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px', fontSize: '0.95rem' }}
+                    />
+                  </div>
+
+                  {/* Summary & Checkout Button */}
+                  <div style={{ background: 'rgba(255,107,0,0.1)', border: '1px solid var(--primary)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
+                    <h4 style={{ color: '#FFF', marginBottom: '10px' }}>📊 예약 정산 영수증 ({selectedDate} {selectedTimeSlot})</h4>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
+                      <span>반려견 이름:</span>
+                      <strong style={{ color: '#FFF' }}>🐶 {activePet.name} ({activePet.breed} · {hasCompletedBefore ? '수료견 우대 적용' : '첫 훈련'})</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
+                      <span>방문 예정일:</span>
+                      <strong style={{ color: '#FFF' }}>{selectedDate} ({selectedTimeSlot})</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
+                      <span>자택 주소:</span>
+                      <strong style={{ color: '#FFF' }}>{targetAddress}</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
+                      <span>기본 훈련비 ({selectedSessionCount}회 세션):</span>
+                      <strong style={{ color: '#FFF' }}>{totalTrainingFee.toLocaleString()}원 {isDiscountApplied ? '(회당 15만원 적용)' : '(회당 20만원 적용)'}</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
+                      <span>출장 거리비 ({calculatedKm}km × 2,000원):</span>
+                      <strong style={{ color: '#F59E0B' }}>+{totalTravelFee.toLocaleString()}원</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px dashed var(--border-color)', paddingTop: '10px', marginTop: '10px' }}>
+                      <span style={{ fontSize: '1.1rem', color: '#FFF', fontWeight: 'bold' }}>최종 총 결제 금액:</span>
+                      <span style={{ fontSize: '1.6rem', color: 'var(--primary)', fontWeight: '800' }}>{grandTotalFee.toLocaleString()}원</span>
+                    </div>
+                  </div>
+
+                  <button className="btn btn-primary btn-full btn-lg" onClick={() => triggerPayment(`${selectedDate} 방문 훈련 예약`)}>
+                    {selectedDate} 날짜로 {grandTotalFee.toLocaleString()}원 결제하기
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Q&A View */}
+            {activeTab === 'qna' && (
+              <div className="container" style={{ maxWidth: '800px' }}>
+                <h2 style={{ color: '#FFF', marginBottom: '16px' }}>❓ Q&A 질문 게시판</h2>
+                {questions.map(q => (
+                  <div key={q.id} className="glass-card" style={{ marginBottom: '14px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <span className="badge badge-green">{q.status}</span>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{q.date} · {q.author}</span>
+                    </div>
+                    <h3 style={{ color: '#FFF', fontSize: '1.1rem', marginBottom: '6px' }}>{q.title}</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{q.content}</p>
+                    {q.answer && (
+                      <div style={{ background: 'rgba(139,92,246,0.1)', padding: '12px', borderRadius: '8px', marginTop: '10px', border: '1px solid rgba(139,92,246,0.3)' }}>
+                        <strong style={{ color: '#A78BFA' }}>🎓 {q.answer.trainerName} 답변:</strong>
+                        <p style={{ color: '#FFF', fontSize: '0.88rem', marginTop: '4px' }}>{q.answer.text}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Photo View */}
+            {activeTab === 'photoboard' && (
+              <div className="container">
+                <h2 style={{ color: '#FFF', marginBottom: '16px' }}>📸 우리 강아지 포토 갤러리</h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
+                  {photos.map(p => (
+                    <div key={p.id} className="glass-card" style={{ padding: 0, overflow: 'hidden' }}>
+                      <img src={p.imageUrl} style={{ width: '100%', height: '240px', objectFit: 'cover' }} />
+                      <div style={{ padding: '16px' }}>
+                        <h4 style={{ color: '#FFF' }}>🐶 {p.dogName} ({p.breed})</h4>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: '8px 0' }}>{p.caption}</p>
+                        <span style={{ color: '#FF8800', fontWeight: 'bold' }}>❤️ 좋아요 {p.likes}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Profile View */}
+            {activeTab === 'profile' && (
+              <div className="container" style={{ maxWidth: '750px' }}>
+                <div className="glass-card">
+                  <h3 style={{ color: '#FFF', marginBottom: '16px' }}>🐶 내 반려견 프로필</h3>
+                  {pets.map(p => (
+                    <div key={p.id} style={{ display: 'flex', gap: '16px', alignItems: 'center', background: '#151D2C', padding: '16px', borderRadius: '12px', marginBottom: '12px' }}>
+                      <img src={p.image} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
+                      <div>
+                        <h4 style={{ color: '#FFF' }}>{p.name} ({p.breed})</h4>
+                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{p.age} · {p.weight}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* App Store View */}
+            {activeTab === 'appstore' && (
+              <div className="container" style={{ paddingBottom: '40px' }}>
+                <div className="glass-card" style={{ background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(16, 185, 129, 0.15) 100%)', padding: '30px 20px', borderRadius: '20px', textAlign: 'center', marginBottom: '30px' }}>
+                  <div style={{ display: 'inline-block', padding: '4px 12px', background: 'rgba(16, 185, 129, 0.2)', border: '1px solid #10B981', color: '#10B981', borderRadius: '9999px', fontSize: '0.82rem', fontWeight: 'bold', marginBottom: '10px' }}>
+                    📱 도담앱스토어
+                  </div>
+                  <h2 style={{ fontSize: '1.8rem', color: '#FFF', margin: '6px 0 10px 0' }}>
+                    도담 펫 앱 라인업 & 센터
+                  </h2>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '20px' }}>
+                    염정화 행동교정 전문가와 함께 만드는 맞춤 펫 앱 스토어입니다. 보호자분들이 자유롭게 실행하고 이용할 수 있습니다!
+                  </p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      const pw = prompt('⚙️ [관리자 인증] 앱 등록을 위해 비밀번호를 입력해주세요:');
+                      if (pw === '@4865') {
+                        const title = prompt('등록할 강아지 앱 이름을 입력해주세요:');
+                        if (!title) return;
+                        const desc = prompt('앱에 대한 짧은 설명을 입력해주세요:') || '도담 신규 등록 앱';
+                        const appUrl = prompt('앱 링크 / URL 주소를 입력해주세요 (선택):') || '#';
+                        alert(`🎉 [${title}] 앱이 성공적으로 도담앱스토어에 등록되었습니다!`);
+                      } else if (pw !== null) {
+                        alert('❌ 관리자 비밀번호가 일치하지 않습니다. (비밀번호: @4865)');
+                      }
+                    }}
+                    style={{ background: '#10B981', color: '#FFF' }}
+                  >
+                    ➕ [관리자 전용] 신규 강아지 앱 새로 등록하기
+                  </button>
+                </div>
+
+                {/* Sample Apps List */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+                  <div className="glass-card" style={{ padding: '20px', borderRadius: '16px', border: '1px solid #10B981' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+                      <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" style={{ width: '48px', height: '48px', borderRadius: '12px' }} />
+                      <div>
+                        <h4 style={{ margin: 0, color: '#FFF', fontSize: '1.02rem' }}>도담 1:1 방문 훈련 계산기</h4>
+                        <span style={{ fontSize: '0.76rem', color: '#10B981' }}>공식 훈련 앱</span>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: '0.85rem', color: '#94A3B8', margin: '0 0 14px 0' }}>안산 출발 거리 자동 출장비 계산 및 1:1 훈련 날짜 클릭 예약 앱</p>
+                    <button className="btn btn-primary btn-full btn-sm" onClick={() => setActiveTab('booking')} style={{ background: '#10B981', color: '#FFF' }}>앱 실행하기</button>
+                  </div>
+
+                  <div className="glass-card" style={{ padding: '20px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#F59E0B20', border: '1px solid #F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>📸</div>
+                      <div>
+                        <h4 style={{ margin: 0, color: '#FFF', fontSize: '1.02rem' }}>도담 AI 강아지 포토 스튜디오</h4>
+                        <span style={{ fontSize: '0.76rem', color: '#F59E0B' }}>AI 사진 앱</span>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: '0.85rem', color: '#94A3B8', margin: '0 0 14px 0' }}>우리 강아지 얼굴로 산타, 훈련사, 프로필 AI 컨셉 화보 제작 앱</p>
+                    <button className="btn btn-secondary btn-full btn-sm" onClick={() => setActiveTab('photoboard')}>앱 실행하기</button>
+                  </div>
+
+                  <div className="glass-card" style={{ padding: '20px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#8B5CF620', border: '1px solid #8B5CF6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>💬</div>
+                      <div>
+                        <h4 style={{ margin: 0, color: '#FFF', fontSize: '1.02rem' }}>1:1 훈련사 영상 챗 상담소</h4>
+                        <span style={{ fontSize: '0.76rem', color: '#8B5CF6' }}>행동 상담 앱</span>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: '0.85rem', color: '#94A3B8', margin: '0 0 14px 0' }}>짖음, 분리불안 동영상 업로드 후 훈련사 1:1 진단 피드백 받는 앱</p>
+                    <button className="btn btn-secondary btn-full btn-sm" onClick={() => setActiveTab('qna')}>앱 실행하기</button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </main>
+
+          {/* Payment Modal */}
+          {showPayModal && (
+            <div className="modal-overlay">
+              <div className="modal-box">
+                <h3 style={{ color: '#FFF', marginBottom: '12px' }}>🔒 안전 결제 진행</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '12px' }}>{payDetails.title}</p>
+                <div style={{ background: '#151D2C', padding: '14px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.88rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                    <span>방문 예정일:</span>
+                    <span style={{ color: '#FFF' }}>{payDetails.date} ({payDetails.time})</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                    <span>방문 자택 주소:</span>
+                    <span style={{ color: '#FFF' }}>{targetAddress}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                    <span>방문 훈련비:</span>
+                    <span style={{ color: '#FFF' }}>{payDetails.basePrice.toLocaleString()}원</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)' }}>
+                    <span>출장 거리비 ({payDetails.distanceKm}km × 2천원):</span>
+                    <span style={{ color: '#F59E0B' }}>+{payDetails.travelFee.toLocaleString()}원</span>
+                  </div>
+                </div>
+                <div style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '20px' }}>총 {payDetails.totalPrice.toLocaleString()}원</div>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button className="btn btn-secondary" style={{ flex: 1 }} onClick={() => setShowPayModal(false)}>취소</button>
+                  <button className="btn btn-primary" style={{ flex: 1 }} onClick={handleConfirmBooking}>결제 승인 & 예약 확정</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Admin Date Schedule Edit Modal */}
+          {adminEditDate && (
+            <div className="modal-overlay">
+              <div className="modal-box" style={{ maxWidth: '440px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                  <h3 style={{ color: '#FFF', margin: 0, fontSize: '1.15rem' }}>⚙️ [{adminEditDate}] 달력 일정 직접 수정</h3>
+                  <button onClick={() => setAdminEditDate(null)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '1.2rem', cursor: 'pointer' }}>✕</button>
+                </div>
+
+                {(() => {
+                  const curSched = bookedSchedule[adminEditDate] || { am: false, pm: false };
+                  return (
+                    <div>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>
+                        원하시는 오전/오후 버튼을 누르면 달력의 해당 날짜 예약 가능 여부가 즉시 변경됩니다.
+                      </p>
+
+                      <div style={{ background: '#151D2C', padding: '14px', borderRadius: '10px', marginBottom: '16px' }}>
+                        {/* AM Slot Toggle */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', paddingBottom: '10px', borderBottom: '1px dashed var(--border-color)' }}>
+                          <div>
+                            <div style={{ color: '#F59E0B', fontWeight: 'bold', fontSize: '0.9rem' }}>☀️ 오전 훈련 슬롯 (10:00 - 11:30)</div>
+                            <span style={{ fontSize: '0.78rem', color: curSched.am ? '#EF4444' : '#10B981', fontWeight: 'bold' }}>
+                              현재 상태: {curSched.am ? '🔴 마감 (예약 불가)' : '🟢 오픈 (예약 가능)'}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            className={`btn btn-sm ${curSched.am ? 'btn-primary' : 'btn-secondary'}`}
+                            onClick={() => {
+                              setBookedSchedule(prev => ({
+                                ...prev,
+                                [adminEditDate]: { ...prev[adminEditDate], am: !curSched.am }
+                              }));
+                            }}
+                          >
+                            {curSched.am ? '🔓 오전 열기' : '🔒 오전 마감하기'}
+                          </button>
+                        </div>
+
+                        {/* PM Slot Toggle */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <div style={{ color: '#3B82F6', fontWeight: 'bold', fontSize: '0.9rem' }}>🌙 오후 훈련 슬롯 (13:00~20:30)</div>
+                            <span style={{ fontSize: '0.78rem', color: curSched.pm ? '#EF4444' : '#10B981', fontWeight: 'bold' }}>
+                              현재 상태: {curSched.pm ? '🔴 마감 (예약 불가)' : '🟢 오픈 (예약 가능)'}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            className={`btn btn-sm ${curSched.pm ? 'btn-primary' : 'btn-secondary'}`}
+                            onClick={() => {
+                              setBookedSchedule(prev => ({
+                                ...prev,
+                                [adminEditDate]: { ...prev[adminEditDate], pm: !curSched.pm }
+                              }));
+                            }}
+                          >
+                            {curSched.pm ? '🔓 오후 열기' : '🔒 오후 마감하기'}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Quick Presets */}
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '16px' }}>
+                        <button
+                          type="button"
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => {
+                            setBookedSchedule(prev => ({
+                              ...prev,
+                              [adminEditDate]: { am: true, pm: true }
+                            }));
+                          }}
+                        >
+                          🚫 하루 전체 휴무 (마감)
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-accent btn-sm"
+                          onClick={() => {
+                            setBookedSchedule(prev => ({
+                              ...prev,
+                              [adminEditDate]: { am: false, pm: false }
+                            }));
+                          }}
+                        >
+                          ✨ 하루 전체 예약 가능
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        className="btn btn-primary btn-full"
+                        onClick={() => setAdminEditDate(null)}
+                      >
+                        수정 완료 및 저장
+                      </button>
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          )}
+
+          {/* Signup / Login Auth Modal */}
+          {showAuthModal && (
+            <div className="modal-overlay">
+              <div className="modal-box" style={{ maxWidth: '480px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '1.4rem' }}>🐾</span>
+                    <div>
+                      <h3 style={{ color: '#FFF', margin: 0, fontSize: '1.2rem', fontWeight: 'bold' }}>
+                        {authTab === 'signup' ? '도담 멤버십 회원가입' : '도담 서비스 로그인'}
+                      </h3>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>1:1 방문 훈련 & 스마트 반려견 케어</div>
+                    </div>
+                  </div>
+                  <button onClick={() => setShowAuthModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '1.2rem', cursor: 'pointer' }}>✕</button>
+                </div>
+
+                {/* Promo Banner */}
+                {authTab === 'signup' && (
+                  <div style={{ background: 'linear-gradient(135deg, rgba(255, 107, 0, 0.2) 0%, rgba(245, 158, 11, 0.15) 100%)', border: '1px solid rgba(255, 107, 0, 0.3)', borderRadius: '12px', padding: '10px 14px', fontSize: '0.82rem', color: '#FF8800', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    🎁 신규 회원 가입 시 <strong>15,000원 훈련 할인 쿠폰</strong> 즉시 지급!
+                  </div>
+                )}
+
+                {/* Tab switcher */}
+                <div className="auth-tab-group" style={{ display: 'flex', gap: '4px', background: 'rgba(255,255,255,0.05)', padding: '4px', borderRadius: '10px', marginBottom: '16px' }}>
+                  <button
+                    type="button"
+                    className={`auth-tab-btn ${authTab === 'signup' ? 'active' : ''}`}
+                    onClick={() => { setAuthTab('signup'); setAuthStep(1); }}
+                    style={{ flex: 1, padding: '8px', border: 'none', background: authTab === 'signup' ? 'var(--primary)' : 'transparent', color: '#FFF', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.85rem', cursor: 'pointer' }}
+                  >
+                    ✨ 신규 회원가입 (쿠폰 혜택)
+                  </button>
+                  <button
+                    type="button"
+                    className={`auth-tab-btn ${authTab === 'login' ? 'active' : ''}`}
+                    onClick={() => setAuthTab('login')}
+                    style={{ flex: 1, padding: '8px', border: 'none', background: authTab === 'login' ? 'var(--primary)' : 'transparent', color: '#FFF', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.85rem', cursor: 'pointer' }}
+                  >
+                    🔑 기존 회원 로그인
+                  </button>
+                </div>
+
+
+
+                {authTab === 'login' ? (
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    if (!authForm.email) {
+                      alert('이메일을 입력해 주세요.');
+                      return;
+                    }
+                    setUser({
+                      name: authForm.name || '김보호자',
+                      email: authForm.email,
+                      isLoggedIn: true
+                    });
+                    alert('🔑 로그인 되었습니다!');
+                    setShowAuthModal(false);
+                  }}>
+                    <div className="form-group" style={{ marginBottom: '12px' }}>
+                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>이메일 주소 *</label>
+                      <input
+                        type="email"
+                        placeholder="example@dodam.kr"
+                        value={authForm.email}
+                        onChange={e => setAuthForm({ ...authForm, email: e.target.value })}
+                        style={{ width: '100%', padding: '10px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group" style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>비밀번호 *</label>
+                      <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={authForm.password}
+                        onChange={e => setAuthForm({ ...authForm, password: e.target.value })}
+                        style={{ width: '100%', padding: '10px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                        required
+                      />
+                    </div>
+
+                    <button className="btn btn-primary btn-full" type="submit">
+                      🔑 로그인하기
+                    </button>
+                  </form>
+                ) : (
+                  <div className="signup-form-container">
+                    {/* Step indicator */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(255,255,255,0.03)', padding: '8px 12px', borderRadius: '8px', marginBottom: '14px', fontSize: '0.78rem', color: '#FFF' }}>
+                      <span style={{ fontWeight: authStep >= 1 ? 'bold' : 'normal', color: authStep >= 1 ? 'var(--primary)' : 'var(--text-muted)' }}>1. 계정 정보</span>
+                      <span>➔</span>
+                      <span style={{ fontWeight: authStep >= 2 ? 'bold' : 'normal', color: authStep >= 2 ? 'var(--primary)' : 'var(--text-muted)' }}>2. 반려견 정보</span>
+                      <span>➔</span>
+                      <span style={{ fontWeight: authStep >= 3 ? 'bold' : 'normal', color: authStep >= 3 ? 'var(--primary)' : 'var(--text-muted)' }}>3. 약관 동의</span>
+                    </div>
+
+                    {authStep === 1 && (
+                      <form onSubmit={(e) => {
+                        e.preventDefault();
+                        if (!authForm.name) { alert('보호자 이름을 입력해주세요.'); return; }
+                        if (!authForm.email) { alert('이메일을 입력해주세요.'); return; }
+                        if (!authForm.password || authForm.password.length < 6) { alert('비밀번호는 6자 이상이어야 합니다.'); return; }
+                        if (authForm.password !== authForm.confirmPassword) { alert('비밀번호가 일치하지 않습니다.'); return; }
+                        setAuthStep(2);
+                      }}>
+                        <div className="form-group" style={{ marginBottom: '10px' }}>
+                          <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>보호자 이름 *</label>
+                          <input
+                            type="text"
+                            placeholder="예: 홍길동"
+                            value={authForm.name}
+                            onChange={e => setAuthForm({ ...authForm, name: e.target.value })}
+                            style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                            required
+                          />
+                        </div>
+
+                        <div className="form-group" style={{ marginBottom: '10px' }}>
+                          <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>이메일 주소 *</label>
+                          <input
+                            type="email"
+                            placeholder="example@dodam.kr"
+                            value={authForm.email}
+                            onChange={e => setAuthForm({ ...authForm, email: e.target.value })}
+                            style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                            required
+                          />
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
+                          <div className="form-group">
+                            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>비밀번호 *</label>
+                            <input
+                              type="password"
+                              placeholder="6자 이상"
+                              value={authForm.password}
+                              onChange={e => setAuthForm({ ...authForm, password: e.target.value })}
+                              style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                              required
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>비밀번호 확인 *</label>
+                            <input
+                              type="password"
+                              placeholder="비밀번호 재입력"
+                              value={authForm.confirmPassword}
+                              onChange={e => setAuthForm({ ...authForm, confirmPassword: e.target.value })}
+                              style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-group" style={{ marginBottom: '14px' }}>
+                          <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>휴대폰 번호 (선택)</label>
+                          <input
+                            type="tel"
+                            placeholder="010-0000-0000"
+                            value={authForm.phone}
+                            onChange={e => setAuthForm({ ...authForm, phone: e.target.value })}
+                            style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                          />
+                        </div>
+
+                        <button className="btn btn-primary btn-full" type="submit">
+                          다음 단계: 반려견 프로필 입력 ➔
+                        </button>
+                      </form>
+                    )}
+
+                    {authStep === 2 && (
+                      <form onSubmit={(e) => {
+                        e.preventDefault();
+                        if (!authForm.dogName) { alert('반려견 이름을 입력해 주세요.'); return; }
+                        setAuthStep(3);
+                      }}>
+                        <div className="form-group" style={{ marginBottom: '10px' }}>
+                          <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>반려견 이름 *</label>
+                          <input
+                            type="text"
+                            placeholder="예: 마루, 뽀삐, 초코"
+                            value={authForm.dogName}
+                            onChange={e => setAuthForm({ ...authForm, dogName: e.target.value })}
+                            style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                            required
+                          />
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
+                          <div className="form-group">
+                            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>견종</label>
+                            <select
+                              value={authForm.dogBreed}
+                              onChange={e => setAuthForm({ ...authForm, dogBreed: e.target.value })}
+                              style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                            >
+                              <option value="포메라니안">포메라니안</option>
+                              <option value="말티즈">말티즈</option>
+                              <option value="토이푸들">토이푸들</option>
+                              <option value="비숑 프리제">비숑 프리제</option>
+                              <option value="시바견">시바견</option>
+                              <option value="진돗개">진돗개</option>
+                              <option value="믹스견">믹스견</option>
+                            </select>
+                          </div>
+                          <div className="form-group">
+                            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>나이 (살)</label>
+                            <input
+                              type="number"
+                              placeholder="예: 2"
+                              value={authForm.dogAge}
+                              onChange={e => setAuthForm({ ...authForm, dogAge: e.target.value })}
+                              style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '8px', marginTop: '14px' }}>
+                          <button className="btn btn-secondary" type="button" onClick={() => setAuthStep(1)}>◀ 이전</button>
+                          <button className="btn btn-primary" style={{ flex: 1 }} type="submit">다음 단계: 약관 동의 ➔</button>
+                        </div>
+                      </form>
+                    )}
+
+                    {authStep === 3 && (
+                      <form onSubmit={(e) => {
+                        e.preventDefault();
+                        if (!authForm.agreeTerms || !authForm.agreePrivacy) {
+                          alert('필수 약관에 동의해 주세요.');
+                          return;
+                        }
+                        setUser({
+                          name: authForm.name || '신규 보호자',
+                          email: authForm.email,
+                          isLoggedIn: true
+                        });
+                        alert(`🎉 [회원가입 완료!]\n${authForm.name || '보호자'}님 환영합니다!\n🎁 15,000원 훈련 할인쿠폰이 자동 발급되었습니다.`);
+                        setShowAuthModal(false);
+                      }}>
+                        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-color)', padding: '12px', borderRadius: '8px', marginBottom: '14px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.82rem' }}>
+                          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#FFF', fontWeight: 'bold' }}>
+                            <input
+                              type="checkbox"
+                              checked={authForm.agreeTerms && authForm.agreePrivacy}
+                              onChange={(e) => setAuthForm({ ...authForm, agreeTerms: e.target.checked, agreePrivacy: e.target.checked })}
+                            />
+                            <span>전체 약관 동의</span>
+                          </label>
+                          <div style={{ height: '1px', background: 'var(--border-color)' }}></div>
+                          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}>
+                            <input
+                              type="checkbox"
+                              checked={authForm.agreeTerms}
+                              onChange={(e) => setAuthForm({ ...authForm, agreeTerms: e.target.checked })}
+                              required
+                            />
+                            <span>[필수] 도담 서비스 이용약관 동의</span>
+                          </label>
+                          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}>
+                            <input
+                              type="checkbox"
+                              checked={authForm.agreePrivacy}
+                              onChange={(e) => setAuthForm({ ...authForm, agreePrivacy: e.target.checked })}
+                              required
+                            />
+                            <span>[필수] 개인정보 수집 및 이용 동의</span>
+                          </label>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button className="btn btn-secondary" type="button" onClick={() => setAuthStep(2)}>◀ 이전</button>
+                          <button className="btn btn-primary btn-lg" style={{ flex: 1 }} type="submit">🎉 회원가입 완료하고 쿠폰받기</button>
+                        </div>
+                      </form>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Admin Auth Modal (Pure Phone SMS Code Authentication) */}
+          {showAdminPwModal && (
+            <div className="modal-overlay">
+              <div className="modal-box" style={{ maxWidth: '420px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <h3 style={{ color: '#FFF', margin: 0, fontSize: '1.15rem' }}>📱 관리자 휴대폰 SMS 본인 인증</h3>
+                  <button onClick={() => setShowAdminPwModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '1.2rem', cursor: 'pointer' }}>✕</button>
+                </div>
+
+                <form onSubmit={handleVerifySmsCode}>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', marginBottom: '14px' }}>
+                    등록된 관리자 휴대폰 번호로 발송된 4자리 인증번호를 입력하세요.
+                  </p>
+
+                  <div className="form-group" style={{ marginBottom: '12px' }}>
+                    <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>휴대폰 번호</label>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input
+                        type="text"
+                        placeholder="010-0000-0000"
+                        value={adminPhone}
+                        onChange={e => setAdminPhone(e.target.value)}
+                        style={{ flex: 1, padding: '10px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px', fontSize: '0.95rem' }}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-primary btn-sm"
+                        onClick={handleSendSmsCode}
+                        style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}
+                      >
+                        {smsSent ? '🔄 재발송' : '📱 인증번호 발송'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {smsSent && (
+                    <div>
+                      <div style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid #10B981', borderRadius: '10px', padding: '12px 14px', marginBottom: '14px' }}>
+                        <div style={{ color: '#34D399', fontWeight: 'bold', fontSize: '0.88rem', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          📱 [문자 메시지 수신 완료] ({adminPhone})
+                        </div>
+                        <div style={{ color: '#FFF', fontSize: '0.95rem' }}>
+                          수신 인증번호: <span style={{ color: '#F59E0B', fontWeight: '800', fontSize: '1.25rem', letterSpacing: '3px', background: 'rgba(0,0,0,0.4)', padding: '2px 10px', borderRadius: '6px', marginLeft: '4px' }}>{smsCode}</span>
+                        </div>
+                        <p style={{ color: '#94A3B8', fontSize: '0.78rem', margin: '6px 0 0 0' }}>
+                          ※ 위 4자리 번호를 아래 칸에 입력하시고 [인증 확인 및 접속]을 클릭하세요.
+                        </p>
+                      </div>
+
+                      <div className="form-group" style={{ marginBottom: '16px' }}>
+                        <label style={{ display: 'block', color: '#10B981', fontSize: '0.85rem', marginBottom: '6px', fontWeight: 'bold' }}>
+                          ✅ 4자리 인증번호 입력
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="인증번호 4자리"
+                          value={userInputCode}
+                          onChange={e => setUserInputCode(e.target.value)}
+                          style={{ width: '100%', padding: '12px', background: '#0F172A', border: '1px solid #10B981', color: '#FFF', borderRadius: '8px', fontSize: '1.2rem', letterSpacing: '4px', textAlign: 'center' }}
+                          maxLength={4}
+                          autoFocus
+                          required
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                    <button type="button" className="btn btn-secondary" style={{ flex: 1 }} onClick={() => setShowAdminPwModal(false)}>취소</button>
+                    <button type="submit" className="btn btn-primary" style={{ flex: 1 }} disabled={!smsSent}>
+                      인증 확인 및 접속
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* Admin Member Management Modal */}
+          {showAdminMemberModal && (
+            <div className="modal-overlay">
+              <div className="modal-box" style={{ maxWidth: '680px', width: '95%' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>
+                  <div>
+                    <h3 style={{ color: '#FFF', margin: 0, fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      👥 [관리자] 회원 정보 & 수료 관리 센터
+                    </h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: '4px 0 0 0' }}>
+                      회원별 훈련 수료 횟수(completedSessions)를 직접 조정하거나 메모를 저장할 수 있습니다.
+                    </p>
+                  </div>
+                  <button onClick={() => setShowAdminMemberModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '1.4rem', cursor: 'pointer' }}>✕</button>
+                </div>
+
+                {/* Search & Actions Bar */}
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '16px' }}>
+                  <input
+                    type="text"
+                    placeholder="🔍 회원 이름, 강아지 이름, 전화번호 검색..."
+                    value={memberSearchQuery}
+                    onChange={e => setMemberSearchQuery(e.target.value)}
+                    style={{ flex: 1, padding: '10px 14px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px', fontSize: '0.88rem' }}
+                  />
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setShowAddMemberForm(!showAddMemberForm)}
+                  >
+                    {showAddMemberForm ? '✕ 폼 닫기' : '➕ 신규 회원 등록'}
+                  </button>
+                </div>
+
+                {/* Add Member Form */}
+                {showAddMemberForm && (
+                  <form onSubmit={handleAddMemberSubmit} style={{ background: '#1E293B', padding: '16px', borderRadius: '12px', marginBottom: '20px', border: '1px solid #3B82F6' }}>
+                    <h4 style={{ color: '#60A5FA', margin: '0 0 12px 0', fontSize: '1rem' }}>📝 신규 회원 수동 등록</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                      <input type="text" placeholder="보호자 이름 *" value={newMemberForm.name} onChange={e => setNewMemberForm({ ...newMemberForm, name: e.target.value })} style={{ padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '6px' }} required />
+                      <input type="text" placeholder="전화번호 (010-0000-0000)" value={newMemberForm.phone} onChange={e => setNewMemberForm({ ...newMemberForm, phone: e.target.value })} style={{ padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '6px' }} />
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                      <input type="text" placeholder="반려견 이름 *" value={newMemberForm.petName} onChange={e => setNewMemberForm({ ...newMemberForm, petName: e.target.value })} style={{ padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '6px' }} required />
+                      <input type="text" placeholder="견종 (예: 포메라니안)" value={newMemberForm.breed} onChange={e => setNewMemberForm({ ...newMemberForm, breed: e.target.value })} style={{ padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '6px' }} />
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                      <input type="email" placeholder="이메일" value={newMemberForm.email} onChange={e => setNewMemberForm({ ...newMemberForm, email: e.target.value })} style={{ padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '6px' }} />
+                      <input type="number" placeholder="초기 수료 횟수 (기본 0)" value={newMemberForm.completedSessions} onChange={e => setNewMemberForm({ ...newMemberForm, completedSessions: e.target.value })} style={{ padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '6px' }} />
+                    </div>
+                    <input type="text" placeholder="자택 상세 주소" value={newMemberForm.address} onChange={e => setNewMemberForm({ ...newMemberForm, address: e.target.value })} style={{ width: '100%', padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '6px', marginBottom: '10px' }} />
+                    <input type="text" placeholder="관리자 특이사항 메모" value={newMemberForm.memo} onChange={e => setNewMemberForm({ ...newMemberForm, memo: e.target.value })} style={{ width: '100%', padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '6px', marginBottom: '12px' }} />
+                    <button type="submit" className="btn btn-primary btn-full">등록 완료</button>
+                  </form>
+                )}
+
+                {/* Member List */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', maxHeight: '55vh', overflowY: 'auto' }}>
+                  {members
+                    .filter(m => {
+                      if (!memberSearchQuery) return true;
+                      const q = memberSearchQuery.toLowerCase();
+                      return m.name.toLowerCase().includes(q) || m.petName.toLowerCase().includes(q) || (m.phone && m.phone.includes(q)) || (m.breed && m.breed.toLowerCase().includes(q));
+                    })
+                    .map(m => {
+                      const isVip = m.completedSessions >= 1;
+                      return (
+                        <div key={m.id} style={{ background: '#1E293B', border: isVip ? '1px solid #10B981' : '1px solid var(--border-color)', borderRadius: '12px', padding: '16px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', borderBottom: '1px dashed var(--border-color)', paddingBottom: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <strong style={{ color: '#FFF', fontSize: '1.05rem' }}>👤 {m.name}</strong>
+                              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>가입일: {m.joinDate}</span>
+                            </div>
+                            <span className={`badge ${isVip ? 'badge-green' : 'badge-purple'}`} style={{ fontSize: '0.78rem' }}>
+                              {isVip ? `🎁 수료견 (회당 15만원 자동 할인)` : `🌱 첫 훈련 대상 (회당 20만원)`}
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.85rem', color: '#E2E8F0', marginBottom: '12px' }}>
+                            <div>🐶 <strong>반려견:</strong> {m.petName} ({m.breed || '품종미상'})</div>
+                            <div>📞 <strong>연락처:</strong> {m.phone || '미등록'}</div>
+                            <div>📧 <strong>이메일:</strong> {m.email}</div>
+                            <div>🏠 <strong>주소:</strong> {m.address}</div>
+                          </div>
+
+                          {/* Completed Sessions Adjustment Controls */}
+                          <div style={{ background: '#0F172A', padding: '10px 14px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                            <span style={{ color: '#FFF', fontSize: '0.88rem', fontWeight: 'bold' }}>
+                              🎓 훈련 수료 횟수: <span style={{ color: '#34D399', fontSize: '1.1rem' }}>{m.completedSessions}회</span>
+                            </span>
+                            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                              <button
+                                type="button"
+                                className="btn btn-secondary btn-sm"
+                                style={{ padding: '2px 8px' }}
+                                onClick={() => handleUpdateCompletedSessions(m.id, -1)}
+                              >
+                                - 1회
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-primary btn-sm"
+                                style={{ padding: '2px 8px' }}
+                                onClick={() => handleUpdateCompletedSessions(m.id, 1)}
+                              >
+                                + 1회 수료 추가
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Editable Memo */}
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <input
+                              type="text"
+                              defaultValue={m.memo}
+                              id={`memo-input-${m.id}`}
+                              placeholder="관리자 특이사항 메모 입력..."
+                              style={{ flex: 1, padding: '8px 10px', background: '#0F172A', border: '1px solid var(--border-color)', color: '#94A3B8', borderRadius: '6px', fontSize: '0.82rem' }}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-secondary btn-sm"
+                              onClick={() => {
+                                const inputEl = document.getElementById(`memo-input-${m.id}`);
+                                if (inputEl) handleSaveMemberMemo(m.id, inputEl.value);
+                              }}
+                            >
+                              메모저장
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-sm"
+                              style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#F87171', border: 'none' }}
+                              onClick={() => handleDeleteMember(m.id, m.name)}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Discreet Footer Link */}
+          <footer style={{ textAlign: 'center', padding: '20px 0 90px 0', color: 'var(--text-muted)', fontSize: '0.78rem' }}>
+            © 2026 도담 (DODAM) 1:1 방문훈련 & 펫케어 서비스 · 
+            <span
+              style={{ cursor: 'pointer', marginLeft: '6px', opacity: 0.5, textDecoration: 'underline' }}
+              onClick={handleAdminAccessClick}
+              title="관리자 접속 (비밀번호: 4865)"
+            >
+              {isAdminMode ? '⚙️ [관리자 수정 ON (클릭시 해제)]' : '🔒 관리자'}
+            </span>
+          </footer>
+
+          {/* Bottom Nav */}
+          <nav className="bottom-nav">
+            <button className={`b-tab ${activeTab === 'home' ? 'active' : ''}`} onClick={() => setActiveTab('home')}>🏠 홈</button>
+            <button className={`b-tab ${activeTab === 'booking' ? 'active' : ''}`} onClick={() => setActiveTab('booking')}>📅 예약달력</button>
+            <button className={`b-tab ${activeTab === 'qna' ? 'active' : ''}`} onClick={() => setActiveTab('qna')}>❓ 질문란</button>
+            <button className={`b-tab ${activeTab === 'photoboard' ? 'active' : ''}`} onClick={() => setActiveTab('photoboard')}>📸 포토</button>
+            <button className={`b-tab ${activeTab === 'profile' ? 'active' : ''}`} onClick={() => setActiveTab('profile')}>🐶 내 강아지</button>
+          </nav>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+import React, { useState, useEffect } from 'react';
+import { Smartphone, Download, Check, X } from 'lucide-react';
+
+export const PwaInstallBanner = () => {
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showBanner, setShowBanner] = useState(false);
+  const [installed, setInstalled] = useState(false);
+
+  useEffect(() => {
+    // Check service worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch((err) => {
+        console.log('ServiceWorker registration failed:', err);
+      });
+    }
+
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowBanner(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      alert('스마트폰 브라우저 메뉴(⋮ 또는 공유 버튼)에서 [홈 화면에 추가]를 클릭하시면 앱으로 설치하실 수 있습니다!');
+      return;
+    }
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setInstalled(true);
+      setShowBanner(false);
+    }
+    setDeferredPrompt(null);
+  };
+
+  if (!showBanner && !installed) {
+    return (
+      <div style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)', border: '1px solid #10B981', borderRadius: '14px', padding: '14px 18px', margin: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" alt="도담 앱" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
+          <div>
+            <div style={{ fontWeight: 'bold', fontSize: '0.96rem', color: '#FFF' }}>📱 스마트폰 전용 '도담' 공식 앱 설치하기</div>
+            <div style={{ fontSize: '0.82rem', color: '#94A3B8' }}>홈 화면 아이콘 등록으로 1초 만에 편리하게 방문 예약하세요!</div>
+          </div>
+        </div>
+        <button className="btn btn-primary btn-sm" onClick={handleInstallClick} style={{ background: '#10B981', color: '#FFF', gap: '6px' }}>
+          <Download size={14} /> 앱 설치
+        </button>
+      </div>
+    );
+  }
+
+  return null;
+};

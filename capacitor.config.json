@@ -1,0 +1,15 @@
+{
+  "appId": "kr.dodam.petcoach",
+  "appName": "도담",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#0B0F17"
+    }
+  }
+}

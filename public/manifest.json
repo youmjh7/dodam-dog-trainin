@@ -1,0 +1,24 @@
+{
+  "short_name": "도담",
+  "name": "도담 - 방문 반려견 훈련 서비스",
+  "description": "염정화 행동교정 전문가의 1:1 방문 반려견 훈련 및 출장비 계산기, 펫케어 통합 예약 앱",
+  "start_url": "/",
+  "background_color": "#0B0F17",
+  "theme_color": "#10B981",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
