@@ -20,7 +20,9 @@ export const Header = () => {
       <div className="container header-content">
         {/* Brand Logo */}
         <div className="logo-group" onClick={() => setActiveTab('home')}>
-          <img src="/dodam_mascot.jpg" alt="도담 로고" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
+          <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', border: '2px solid #10B981' }}>
+            🐶
+          </div>
           <div className="logo-text-group">
             <span className="logo-title font-heading">도담</span>
             <span className="logo-sub">DODAM · 방문 반려견 훈련 서비스</span>

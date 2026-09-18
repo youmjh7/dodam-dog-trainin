@@ -11,8 +11,21 @@ export const HomeView = () => {
       {/* Hero Banner Section */}
       <section className="hero-section">
         <div className="container hero-container">
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <img src="/dodam_mascot.jpg" alt="도담 마스코트" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #10B981', boxShadow: '0 0 30px rgba(16, 185, 129, 0.45)' }} />
+          <div style={{ textAlign: 'center', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ 
+              width: '110px', 
+              height: '110px', 
+              borderRadius: '50%', 
+              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              border: '3px solid #10B981', 
+              boxShadow: '0 0 30px rgba(16, 185, 129, 0.5)',
+              fontSize: '3.2rem'
+            }}>
+              🐶
+            </div>
           </div>
 
           <div className="hero-badge pulse-element">
