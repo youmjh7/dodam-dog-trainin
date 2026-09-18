@@ -180,7 +180,7 @@ export const AuthModal = () => {
       hasWelcomeCoupon: true
     }));
 
-    alert(`🎉 [도담 회원가입 완료!]\n\n${formData.name} 보호자님 환영합니다!\n🎁 신규가입 15,000원 할인쿠폰이 즉시 발급되었습니다.`);
+    alert(`🎉 [도담 회원가입 완료!]\n\n${formData.name} 보호자님 환영합니다!`);
     setAuthModalOpen(false);
   };
 
@@ -211,7 +211,7 @@ export const AuthModal = () => {
       isLoggedIn: true
     }));
 
-    alert(`🎉 ${providerName} 간편 가입 완료!\n15,000원 신규쿠폰 혜택이 적용되었습니다.`);
+    alert(`🎉 ${providerName} 간편 가입 완료!`);
     setAuthModalOpen(false);
   };
 
@@ -239,8 +239,7 @@ export const AuthModal = () => {
         {/* Promo Benefit Banner */}
         {!isLoginMode && (
           <div className="signup-benefit-banner">
-            <Gift size={18} className="gift-icon" />
-            <span>신규 회원 가입 시 <strong>15,000원 훈련 할인 쿠폰</strong> 즉시 지급! 🎁</span>
+            <span>✨ 도담 1:1 맞춤 방문 훈련 서비스 회원 가입</span>
           </div>
         )}
 

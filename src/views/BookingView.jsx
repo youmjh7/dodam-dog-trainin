@@ -119,9 +119,8 @@ export const BookingView = () => {
 
   // 1회 이상 훈련 수료 강아지이거나 2회 이상 신청 시 회당 15만원 자동 할인!
   const hasCompletedBefore = activePet && (activePet.completedSessions >= 1);
-  const isDiscountApplied = hasCompletedBefore || sessionCount >= 2;
-  const baseFeePerSession = isDiscountApplied ? 150000 : 200000;
-  const totalTrainingFee = baseFeePerSession * sessionCount;
+  const baseFeePerSession = hasCompletedBefore ? 150000 : 200000;
+  const totalTrainingFee = sessionCount * baseFeePerSession;
   const totalTravelFee = calculatedKm * 2000;
   const grandTotalFee = totalTrainingFee + totalTravelFee;
 
@@ -205,33 +204,7 @@ export const BookingView = () => {
         <div className="step-content">
           <h3 className="step-title">1단계: 방문 희망 주소 입력 & 훈련 횟수 선택</h3>
 
-          {/* Repeat Dog VIP Discount Badge Banner */}
-          {hasCompletedBefore && (
-            <div style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid #10B981', borderRadius: '14px', padding: '16px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ fontSize: '1.5rem' }}>🎁</span>
-              <div>
-                <div style={{ color: '#10B981', fontWeight: 'bold', fontSize: '0.98rem' }}>
-                  수료견 자동 15만원 우대 적용: 🐶 {activePet.name} (누적 {activePet.completedSessions || 1}회 수료)
-                </div>
-                <div style={{ color: '#E2E8F0', fontSize: '0.85rem' }}>
-                  1회 이상 훈련을 받은 강아지는 <strong>다음 훈련 예약 시 1회만 신청하셔도 회당 15만원(5만원 자동 할인)</strong> 혜택이 적용됩니다!
-                </div>
-              </div>
-            </div>
-          )}
-
           <div className="calculator-box glass-card">
-            <div className="form-group">
-              <label className="form-label">훈련 횟수 선택 ({hasCompletedBefore ? '수료견 15만원 우대적용!' : '2회 이상 회당 15만원'})</label>
-              <select
-                className="form-select"
-                value={sessionCount}
-                onChange={(e) => setSessionCount(Number(e.target.value))}
-              >
-                <option value={1}>{hasCompletedBefore ? `1회 재방문 우대 (150,000원) [수료견 5만원 할인!]` : `1회 단독 방문 (200,000원)`}</option>
-                <option value={2}>2회 연속 패키지 (회당 15만원 = 300,000원) [회당 5만원 할인!]</option>
-              </select>
-            </div>
 
             <div className="form-group">
               <label className="form-label"><MapPin size={14} /> 방문 희망 자택 상세 주소 입력</label>
@@ -507,8 +480,8 @@ export const BookingView = () => {
                 <span className="r-val">{targetAddress}</span>
               </div>
               <div className="receipt-item">
-                <span className="r-label">훈련 기본비 ({sessionCount}회 세션)</span>
-                <span className="r-val">{totalTrainingFee.toLocaleString()}원 {isDiscountApplied ? '(회당 15만원 적용)' : '(회당 20만원 적용)'}</span>
+                <span className="r-label">훈련 기본비 (1회 방문)</span>
+                <span className="r-val">{totalTrainingFee.toLocaleString()}원</span>
               </div>
               <div className="receipt-item">
                 <span className="r-label">출장 거리비 ({calculatedKm}km × 2천원)</span>

@@ -284,7 +284,7 @@
       const [showAuthModal, setShowAuthModal] = useState(false);
       const [authTab, setAuthTab] = useState('signup');
       const [authStep, setAuthStep] = useState(1);
-      const [authForm, setAuthForm] = useState({ name: '', email: '', password: '', confirmPassword: '', phone: '', dogName: '', dogBreed: '포메라니안', dogAge: '2', agreeTerms: false, agreePrivacy: false });
+      const [authForm, setAuthForm] = useState({ name: '', email: '', password: '', confirmPassword: '', phone: '', dogName: '', dogBreed: '포메라니안', dogAge: '2', problemBehavior: '', agreeTerms: false, agreePrivacy: false });
 
       // 로고 10회 연속 클릭 보안 인증 카운터
       const [logoClicks, setLogoClicks] = useState(0);
@@ -421,20 +421,61 @@
         }
       };
 
-      // 2. 방문 훈련 보고서 저장 핸들러
+      const navigateToTab = (tabName) => {
+        if (tabName === 'booking' && !user.isLoggedIn) {
+          alert('🔒 방문 훈련 예약은 회원가입 및 로그인 후 이용 가능합니다.\n먼저 회원가입을 진행해 주세요.');
+          setShowAuthModal(true);
+          setAuthTab('signup');
+          return;
+        }
+        setActiveTab(tabName);
+      };
+
+      // 관리자: 회원 목록에서 방문 훈련 양식 작성 및 수정 열기
+      const handleOpenMemberTrainingForm = (member) => {
+        const existingReport = trainingForms.find(tf => tf.memberId === member.id || (tf.memberName && tf.memberName.includes(member.name)));
+        if (existingReport) {
+          setActiveForm(existingReport);
+          alert(`✏️ [${member.name}] 회원님의 기존 방문 훈련 보고서를 불러왔습니다.\n양식을 수정 후 [보고서 저장]을 눌러주세요.`);
+        } else {
+          setActiveForm({
+            id: `tf-${Date.now()}`,
+            memberId: member.id,
+            memberName: member.name,
+            petName: member.petName,
+            breed: member.breed,
+            date: selectedDate || new Date().toISOString().split('T')[0],
+            problems: member.problemBehavior || member.memo || '현관 벨소리 및 발자국 소리에 심하게 짖음.',
+            desiredFixes: member.problemBehavior || '벨 소리 도어 경계 완화 및 매트 피신',
+            instructions: '1. 벨 소리 녹음 재생 탈감작 훈련\n2. 매트 피신 명령어 및 긍정 간식 보상\n3. 바른 리드줄 훈련'
+          });
+          alert(`📝 [${member.name}] 회원님의 신규 방문 훈련 양식 작성 창으로 이동합니다.`);
+        }
+        setAdminSubTab('training-form');
+      };
+
+      // 2. 방문 훈련 보고서 저장/수정 핸들러
       const handleSaveTrainingReport = (e) => {
         e.preventDefault();
         if (!activeForm.problems || !activeForm.desiredFixes || !activeForm.instructions) {
           alert('모든 필수 항목(문제점, 고치고 싶은 행동, 지시사항)을 입력해 주세요.');
           return;
         }
-        const newReport = {
-          id: `tf-${Date.now()}`,
-          ...activeForm
-        };
-        setTrainingForms(prev => [newReport, ...prev]);
-        alert(`🎉 [${activeForm.memberName}] 회원님의 방문 훈련 양식이 정상 저장되었습니다!`);
-        setActiveForm(prev => ({ ...prev, problems: '', desiredFixes: '', instructions: '' }));
+        const existingIdx = trainingForms.findIndex(tf => (activeForm.id && tf.id === activeForm.id) || (tf.memberId === activeForm.memberId && tf.date === activeForm.date));
+        if (existingIdx >= 0) {
+          const updated = [...trainingForms];
+          updated[existingIdx] = { ...activeForm };
+          setTrainingForms(updated);
+          alert(`✏️ [${activeForm.memberName}] 회원님의 방문 훈련 양식이 정상 수정되었습니다!`);
+        } else {
+          const newReport = {
+            id: activeForm.id || `tf-${Date.now()}`,
+            ...activeForm
+          };
+          setTrainingForms(prev => [newReport, ...prev]);
+          alert(`🎉 [${activeForm.memberName}] 회원님의 방문 훈련 양식이 정상 저장되었습니다!`);
+        }
+        setActiveForm(prev => ({ ...prev, id: '', problems: '', desiredFixes: '', instructions: '' }));
       };
 
       // 1. 앱스토어 신규 앱 등록 핸들러
@@ -504,13 +545,18 @@
       }, [targetAddress]);
 
       const hasCompletedBefore = activePet && (activePet.completedSessions >= 1);
-      const isDiscountApplied = hasCompletedBefore || selectedSessionCount >= 2;
-      const baseFeePerSession = isDiscountApplied ? 150000 : 200000;
-      const totalTrainingFee = baseFeePerSession * selectedSessionCount;
+      const baseFeePerSession = hasCompletedBefore ? 150000 : 200000;
+      const totalTrainingFee = selectedSessionCount * baseFeePerSession;
       const totalTravelFee = calculatedKm * 2000;
       const grandTotalFee = totalTrainingFee + totalTravelFee;
 
       const triggerPayment = (title) => {
+        if (!user.isLoggedIn) {
+          alert('🔒 방문 훈련 예약은 회원가입 및 로그인 후 이용 가능합니다.\n먼저 회원가입을 진행해 주세요.');
+          setShowAuthModal(true);
+          setAuthTab('signup');
+          return;
+        }
         setPayDetails({
           title,
           basePrice: totalTrainingFee,
@@ -581,9 +627,9 @@
               </div>
 
               <div className="nav-links" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
-                <button className={`nav-btn ${activeTab === 'home' ? 'active' : ''}`} onClick={() => setActiveTab('home')}>홈</button>
-                <button className={`nav-btn ${activeTab === 'booking' ? 'active' : ''}`} onClick={() => setActiveTab('booking')} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  📅 방문 훈련 예약 <span className="badge badge-orange" style={{ fontSize: '0.72rem', padding: '2px 6px' }}>회당 15만원~</span>
+                <button className={`nav-btn ${activeTab === 'home' ? 'active' : ''}`} onClick={() => navigateToTab('home')}>홈</button>
+                <button className={`nav-btn ${activeTab === 'booking' ? 'active' : ''}`} onClick={() => navigateToTab('booking')}>
+                  📅 방문 훈련 예약
                 </button>
                 <button className={`nav-btn ${activeTab === 'appstore' ? 'active' : ''}`} onClick={() => setActiveTab('appstore')} style={{ background: activeTab === 'appstore' ? '#10B981' : 'transparent', color: activeTab === 'appstore' ? '#FFF' : '#10B981', border: '1px solid #10B981' }}>📱 도담앱스토어</button>
                 <button className={`nav-btn ${activeTab === 'qna' ? 'active' : ''}`} onClick={() => setActiveTab('qna')}>❓ Q&A 질문란</button>
@@ -658,9 +704,9 @@
                     </div>
                     <div>
                       <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '14px' }}>
-                        200,000원 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>(+ 거리 출장비)</span>
+                        200,000원 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>(재방문 시 회당 15만원)</span>
                       </div>
-                      <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>
+                      <button className="btn btn-primary btn-full" onClick={() => navigateToTab('booking')}>
                         📅 날짜 선택하고 예약하기
                       </button>
                     </div>
@@ -1024,7 +1070,14 @@
                             </div>
                           </div>
 
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                            <button
+                              className="btn btn-sm btn-primary"
+                              onClick={() => handleOpenMemberTrainingForm(m)}
+                              style={{ background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', color: '#FFF' }}
+                            >
+                              📝 훈련 양식 작성/수정
+                            </button>
                             <span className="badge badge-orange">수료: {m.completedSessions}회</span>
                             <button className="btn btn-sm btn-secondary" onClick={() => handleUpdateCompletedSessions(m.id, 1)}>+1회</button>
                             <button
@@ -1253,35 +1306,102 @@
                     })()}
                   </div>
 
-                  {hasCompletedBefore && (
-                    <div style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid #10B981', borderRadius: '12px', padding: '14px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.4rem' }}>🎁</span>
-                      <div>
-                        <div style={{ color: '#10B981', fontWeight: 'bold', fontSize: '0.95rem' }}>
-                          수료견 자동 15만원 우대 적용: 🐶 {activePet.name} (누적 {activePet.completedSessions}회 수료)
+                  {(() => {
+                    const matchedReports = trainingForms.filter(tf => tf.date === selectedDate);
+                    if (matchedReports.length === 0) return null;
+                    return (
+                      <div style={{ background: 'rgba(139, 92, 246, 0.15)', border: '1px solid #8B5CF6', borderRadius: '16px', padding: '18px', marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                          <h4 style={{ color: '#A78BFA', margin: 0, fontSize: '1.05rem', fontWeight: 'bold' }}>
+                            📄 [{selectedDate}] 방문 훈련 작성 보고서 ({matchedReports.length}건)
+                          </h4>
+                          {isAdminMode && (
+                            <button className="btn btn-sm btn-accent" onClick={() => {
+                              setActiveForm(matchedReports[0]);
+                              setActiveTab('admin');
+                              setAdminSubTab('training-form');
+                            }}>
+                              ✏️ 보고서 수정하기
+                            </button>
+                          )}
                         </div>
-                        <div style={{ color: '#E2E8F0', fontSize: '0.85rem' }}>
-                          이전에 1회 이상 훈련을 받은 강아지는 <strong>다음 훈련 예약 시 1회만 신청하셔도 회당 15만원(5만원 할인)</strong> 혜택이 자동 적용됩니다!
-                        </div>
+                        {matchedReports.map(rp => (
+                          <div key={rp.id} style={{ background: '#111827', padding: '14px', borderRadius: '10px', marginBottom: '8px', border: '1px solid var(--border-color)' }}>
+                            <div style={{ color: '#FFF', fontWeight: 'bold', marginBottom: '6px', fontSize: '0.95rem' }}>
+                              👤 {rp.memberName} (🐶 {rp.petName} · {rp.breed})
+                            </div>
+                            <div style={{ fontSize: '0.86rem', color: '#E2E8F0', marginBottom: '4px' }}>
+                              <strong style={{ color: '#F87171' }}>🚨 문제점:</strong> {rp.problems}
+                            </div>
+                            <div style={{ fontSize: '0.86rem', color: '#E2E8F0', marginBottom: '4px' }}>
+                              <strong style={{ color: '#F59E0B' }}>🎯 고치고 싶은 행동:</strong> {rp.desiredFixes}
+                            </div>
+                            <div style={{ fontSize: '0.86rem', color: '#34D399', whiteSpace: 'pre-line' }}>
+                              <strong>💡 훈련사 코칭 지시사항:</strong> {rp.instructions}
+                            </div>
+                          </div>
+                        ))}
                       </div>
+                    );
+                  })()}
+
+                  {hasCompletedBefore ? (
+                    <div style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid #10B981', borderRadius: '12px', padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '1.2rem' }}>🎁</span>
+                      <span style={{ color: '#10B981', fontWeight: 'bold', fontSize: '0.9rem' }}>
+                        재방문 회원 우대 적용: 🐶 {activePet.name} (회당 15만원 우대가격)
+                      </span>
+                    </div>
+                  ) : (
+                    <div style={{ background: 'rgba(255, 107, 0, 0.12)', border: '1px solid var(--primary)', borderRadius: '12px', padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '1.2rem' }}>🌱</span>
+                      <span style={{ color: '#FF8800', fontWeight: 'bold', fontSize: '0.9rem' }}>
+                        신규 회원 첫 방문 훈련 (회당 20만원 | 훈련 수료 후 재방문 시 15만원 적용)
+                      </span>
                     </div>
                   )}
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '20px' }}>
                     <div>
-                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>1. 훈련 횟수 선택 ({hasCompletedBefore ? '수료견 15만원 우대적용!' : '2회 이상 회당 15만원'})</label>
+                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>
+                        1. 훈련 횟수 선택 ({hasCompletedBefore ? '재방문 회당 15만원' : '첫 훈련 회당 20만원'})
+                      </label>
                       <select
                         value={selectedSessionCount}
                         onChange={e => setSelectedSessionCount(Number(e.target.value))}
                         style={{ width: '100%', padding: '12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px' }}
                       >
-                        <option value={1}>{hasCompletedBefore ? `1회 재방문 우대 (150,000원) [수료견 5만원 할인!]` : `1회 단독 방문 (200,000원)`}</option>
-                        <option value={2}>2회 연속 패키지 (회당 15만원 = 300,000원) [회당 5만원 할인!]</option>
+                        {hasCompletedBefore ? (
+                          <>
+                            <option value={1}>1회 재방문 훈련 (150,000원)</option>
+                            <option value={2}>2회 재방문 훈련 (300,000원)</option>
+                            <option value={3}>3회 재방문 훈련 (450,000원)</option>
+                            <option value={4}>4회 재방문 훈련 (600,000원)</option>
+                          </>
+                        ) : (
+                          <>
+                            <option value={1}>1회 첫 방문 훈련 (200,000원)</option>
+                            <option value={2}>2회 첫 방문 훈련 (400,000원)</option>
+                            <option value={3}>3회 첫 방문 훈련 (600,000원)</option>
+                            <option value={4}>4회 첫 방문 훈련 (800,000원)</option>
+                          </>
+                        )}
                       </select>
                     </div>
 
                     <div>
-                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>2. 산출 거리 km (수정 가능)</label>
+                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>2. 방문 희망 자택 주소 입력</label>
+                      <input
+                        type="text"
+                        placeholder="예: 경기도 안산시 상록구 부곡동 123, 서울시 서초구 반포동 100"
+                        value={targetAddress}
+                        onChange={e => setTargetAddress(e.target.value)}
+                        style={{ width: '100%', padding: '12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px', fontSize: '0.95rem' }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>3. 산출 거리 km (수정 가능)</label>
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                         <input
                           type="number"
@@ -1294,22 +1414,11 @@
                     </div>
                   </div>
 
-                  <div style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>3. 방문 희망 자택 주소 입력</label>
-                    <input
-                      type="text"
-                      placeholder="예: 경기도 안산시 상록구 부곡동 123, 서울시 서초구 반포동 100"
-                      value={targetAddress}
-                      onChange={e => setTargetAddress(e.target.value)}
-                      style={{ width: '100%', padding: '12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px', fontSize: '0.95rem' }}
-                    />
-                  </div>
-
                   <div style={{ background: 'rgba(255,107,0,0.1)', border: '1px solid var(--primary)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
                     <h4 style={{ color: '#FFF', marginBottom: '10px' }}>📊 예약 정산 영수증 ({selectedDate} {selectedTimeSlot})</h4>
                     <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
                       <span>반려견 이름:</span>
-                      <strong style={{ color: '#FFF' }}>🐶 {activePet.name} ({activePet.breed} · {hasCompletedBefore ? '수료견 우대 적용' : '첫 훈련'})</strong>
+                      <strong style={{ color: '#FFF' }}>🐶 {activePet.name} ({activePet.breed})</strong>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
                       <span>방문 예정일:</span>
@@ -1320,8 +1429,8 @@
                       <strong style={{ color: '#FFF' }}>{targetAddress}</strong>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
-                      <span>기본 훈련비 ({selectedSessionCount}회 세션):</span>
-                      <strong style={{ color: '#FFF' }}>{totalTrainingFee.toLocaleString()}원 {isDiscountApplied ? '(회당 15만원 적용)' : '(회당 20만원 적용)'}</strong>
+                      <span>기본 훈련비 ({selectedSessionCount}회 방문):</span>
+                      <strong style={{ color: '#FFF' }}>{totalTrainingFee.toLocaleString()}원 {hasCompletedBefore ? '(재방문 15만원 적용)' : '(첫 훈련 20만원 적용)'}</strong>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '6px' }}>
                       <span>출장 거리비 ({calculatedKm}km × 2,000원):</span>
@@ -1613,7 +1722,7 @@
 
                 {authTab === 'signup' && (
                   <div style={{ background: 'linear-gradient(135deg, rgba(255, 107, 0, 0.2) 0%, rgba(245, 158, 11, 0.15) 100%)', border: '1px solid rgba(255, 107, 0, 0.3)', borderRadius: '12px', padding: '10px 14px', fontSize: '0.82rem', color: '#FF8800', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    🎁 신규 회원 가입 시 <strong>15,000원 훈련 할인 쿠폰</strong> 즉시 지급!
+                    ✨ 도담 1:1 맞춤 방문 훈련 서비스 회원 가입
                   </div>
                 )}
 
@@ -1811,6 +1920,18 @@
                           </div>
                         </div>
 
+                        <div className="form-group" style={{ marginBottom: '10px' }}>
+                          <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '4px' }}>
+                            🐕 고치고 싶은 문제 행동 (상세 작성)
+                          </label>
+                          <textarea
+                            placeholder="예: 현관 도어벨 및 발자국 소리에 심하게 짖음, 외부인 경계, 산책 시 목줄 당김, 분리불안 등"
+                            value={authForm.problemBehavior || ''}
+                            onChange={e => setAuthForm({ ...authForm, problemBehavior: e.target.value })}
+                            style={{ width: '100%', padding: '9px 12px', background: '#151D2C', border: '1px solid var(--border-color)', color: '#FFF', borderRadius: '8px', minHeight: '60px', fontSize: '0.85rem' }}
+                          />
+                        </div>
+
                         <div style={{ display: 'flex', gap: '8px', marginTop: '14px' }}>
                           <button className="btn btn-secondary" type="button" onClick={() => setAuthStep(1)}>◀ 이전</button>
                           <button className="btn btn-primary" style={{ flex: 1 }} type="submit">다음 단계: 약관 동의 ➔</button>
@@ -1834,7 +1955,8 @@
                           breed: authForm.dogBreed || '포메라니안',
                           completedSessions: 0,
                           address: '주소 미입력',
-                          memo: '신규 회원가입 완료',
+                          memo: authForm.problemBehavior ? `[가입 시 작성 문제행동] ${authForm.problemBehavior}` : '신규 회원가입 완료',
+                          problemBehavior: authForm.problemBehavior || '',
                           joinDate: new Date().toISOString().split('T')[0]
                         };
                         setMembers(prev => [newM, ...prev]);
@@ -1843,7 +1965,7 @@
                           email: newM.email,
                           isLoggedIn: true
                         });
-                        alert(`🎉 [회원가입 성공!]\n${newM.name}님 환영합니다!\n🎁 15,000원 훈련 할인쿠폰이 발급되었습니다.`);
+                        alert(`🎉 [회원가입 성공!]\n${newM.name}님 환영합니다!`);
                         setShowAuthModal(false);
                       }}>
                         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-color)', padding: '12px', borderRadius: '8px', marginBottom: '14px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.82rem' }}>
