@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { Home, Calendar, MessageSquare, Sparkles, User } from 'lucide-react';
+import { Home, Calendar, Smartphone, MessageSquare, Camera, User } from 'lucide-react';
 
 export const BottomNav = () => {
   const { activeTab, setActiveTab } = useApp();
@@ -8,8 +8,9 @@ export const BottomNav = () => {
   const tabs = [
     { id: 'home', label: '홈', icon: Home },
     { id: 'booking', label: '방문예약', icon: Calendar, badge: '15만' },
-    { id: 'consultation', label: '1:1 챗', icon: MessageSquare },
-    { id: 'ai-studio', label: 'AI스튜디오', icon: Sparkles, color: '#F59E0B' },
+    { id: 'appstore', label: '도담스토어', icon: Smartphone, color: '#10B981' },
+    { id: 'qna', label: 'Q&A', icon: MessageSquare },
+    { id: 'photoboard', label: '포토', icon: Camera },
     { id: 'pet-profile', label: '내강아지', icon: User }
   ];
 

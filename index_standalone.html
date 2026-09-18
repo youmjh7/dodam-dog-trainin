@@ -60,7 +60,7 @@
     }
     @media (min-width: 768px) { body { padding-bottom: 0; } }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
     .font-heading { font-family: var(--font-heading); }
     .text-gradient {
       background: linear-gradient(135deg, #FFF 20%, var(--primary) 100%);
@@ -89,6 +89,10 @@
       border-radius: var(--radius-lg);
       padding: 24px;
     }
+    .glass-card:hover {
+      border-color: rgba(255, 107, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
 
     .badge {
       display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px;
@@ -100,17 +104,17 @@
 
     /* Header */
     .header {
-      position: sticky; top: 0; z-index: 900; background: rgba(11, 15, 23, 0.9);
+      position: sticky; top: 0; z-index: 900; background: rgba(11, 15, 23, 0.92);
       backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color);
     }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 12px; }
-    .brand { display: flex; align-items: center; gap: 10px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
-    .brand-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
     .brand-title { font-size: 1.3rem; font-weight: 800; color: #FFF; white-space: nowrap; flex-shrink: 0; word-break: keep-all; }
-    .nav-links { display: none; gap: 4px; align-items: center; white-space: nowrap; flex-shrink: 0; }
+    .nav-links { display: none; gap: 6px; align-items: center; white-space: nowrap; flex-shrink: 0; }
     @media (min-width: 860px) { .nav-links { display: flex; } }
-    .nav-btn { background: none; border: none; color: var(--text-muted); padding: 8px 12px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border-radius: var(--radius-md); white-space: nowrap; flex-shrink: 0; word-break: keep-all; display: inline-flex; align-items: center; gap: 4px; }
-    .nav-btn.active { color: #FFF; background: rgba(255, 107, 0, 0.12); border: 1px solid rgba(255, 107, 0, 0.3); }
+    .nav-btn { background: none; border: 1px solid transparent; color: var(--text-muted); padding: 8px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border-radius: var(--radius-md); white-space: nowrap; flex-shrink: 0; word-break: keep-all; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+    .nav-btn:hover { color: #FFF; background: rgba(255, 255, 255, 0.05); }
+    .nav-btn.active { color: #FFF; background: rgba(255, 107, 0, 0.12); border-color: rgba(255, 107, 0, 0.3); }
 
     .header-actions { display: flex; align-items: center; gap: 10px; white-space: nowrap; flex-shrink: 0; }
 
@@ -219,33 +223,56 @@
       return 25;
     }
 
-    const DodamLogo = ({ size = 44, style = {} }) => (
-      <div 
-        style={{ 
-          width: `${size}px`, 
-          height: `${size}px`, 
-          borderRadius: '50%', 
-          overflow: 'hidden', 
-          display: 'inline-flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          boxShadow: '0 0 25px rgba(16, 185, 129, 0.45)',
-          border: '2px solid #10B981',
-          background: '#0B0F17',
-          flexShrink: 0,
-          ...style 
-        }}
-      >
-        <img 
-          src="/dodam_mascot.jpg" 
-          alt="도담 마스코트 로고" 
-          onError={(e) => {
-            e.target.style.display = 'none';
+    const DodamLogo = ({ size = 44, style = {} }) => {
+      const [imgIndex, setImgIndex] = useState(0);
+      const sources = ['로고시안', 'public/dodam_mascot.jpg', 'dodam_mascot.jpg', './dodam_mascot.jpg', '/dodam_mascot.jpg'];
+
+      return (
+        <div 
+          style={{ 
+            width: `${size}px`, 
+            height: `${size}px`, 
+            borderRadius: '50%', 
+            overflow: 'hidden', 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            boxShadow: '0 0 25px rgba(16, 185, 129, 0.45)',
+            border: '2px solid #10B981',
+            background: '#FFF9F2',
+            flexShrink: 0,
+            ...style 
           }}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-        />
-      </div>
-    );
+        >
+          {imgIndex < sources.length ? (
+            <img 
+              src={sources[imgIndex]} 
+              alt="도담 로고" 
+              onError={() => setImgIndex(prev => prev + 1)}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
+          ) : (
+            <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="50" fill="#FDF6EC" />
+              <circle cx="50" cy="50" r="47" stroke="#10B981" strokeWidth="2.5" fill="none" />
+              <path d="M 22 28 C 14 36 12 56 22 66 C 26 70 34 64 30 52 Z" fill="#EAB308" />
+              <path d="M 78 28 C 86 36 88 56 78 66 C 74 70 66 64 70 52 Z" fill="#EAB308" />
+              <ellipse cx="50" cy="46" rx="26" ry="24" fill="#FDE047" />
+              <ellipse cx="50" cy="52" rx="16" ry="12" fill="#FFFFFF" />
+              <circle cx="39" cy="42" r="4.5" fill="#1E293B" />
+              <circle cx="37.5" cy="40.5" r="1.5" fill="#FFFFFF" />
+              <circle cx="61" cy="42" r="4.5" fill="#1E293B" />
+              <circle cx="60.5" cy="40.5" r="1.5" fill="#FFFFFF" />
+              <ellipse cx="50" cy="49" rx="5" ry="3.5" fill="#1E293B" />
+              <path d="M 45 53 Q 50 57 55 53" stroke="#1E293B" strokeWidth="2" strokeLinecap="round" />
+              <path d="M 46.5 54.5 C 46.5 62 53.5 62 53.5 54.5 Z" fill="#F43F5E" />
+              <path d="M 28 66 Q 50 82 72 66 Q 50 94 28 66 Z" fill="#16A34A" />
+              <path d="M 50 72 Q 54 75 52 80 Q 47 78 50 72 Z" fill="#FFFFFF" />
+            </svg>
+          )}
+        </div>
+      );
+    };
 
     function App() {
       const [activeTab, setActiveTab] = useState('home');
@@ -511,7 +538,7 @@
           <main style={{ paddingTop: '30px', paddingBottom: '40px' }}>
             {/* Home View */}
             {activeTab === 'home' && (
-              <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
+              <div className="container" style={{ maxWidth: '1100px', margin: '0 auto' }}>
                 <div style={{ textAlign: 'center', margin: '20px 0 30px 0' }}>
                   <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                     <DodamLogo size={110} />
@@ -526,7 +553,7 @@
                   </p>
 
                   {/* Important Notice Card */}
-                  <div style={{ background: 'rgba(255, 107, 0, 0.1)', border: '1px solid #FF8800', borderRadius: '16px', padding: '20px', maxWidth: '780px', margin: '0 auto 30px auto', textAlign: 'left' }}>
+                  <div style={{ background: 'rgba(255, 107, 0, 0.1)', border: '1px solid #FF8800', borderRadius: '16px', padding: '20px', maxWidth: '880px', margin: '0 auto 30px auto', textAlign: 'left' }}>
                     <div style={{ color: '#FF8800', fontWeight: 'bold', fontSize: '1.08rem', marginBottom: '6px' }}>
                       🚨 [훈련 범위 & 원칙] 도담 1:1 방문 훈련 필독 안내
                     </div>
@@ -540,44 +567,63 @@
                   </div>
                 </div>
 
-                {/* 3 Main Cards Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                {/* 3 Main Cards Grid - Exactly 3 Columns in 1 Row */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: '24px' }}>
                   {/* Card 1: Booking */}
-                  <div className="glass-card" style={{ textAlign: 'left' }}>
-                    <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem' }}>1회 원포인트 방문 훈련</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
-                      90분간 목줄 리드워크, 벨 반응, 매트 훈련 집중 교정 (대소변 훈련 제외 / 성공 시 보상 지급)
-                    </p>
-                    <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '16px' }}>
-                      200,000원 (+ 거리 출장비)
+                  <div className="glass-card" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', transition: 'all 0.2s ease-in-out' }}>
+                    <div>
+                      <span className="badge badge-orange" style={{ marginBottom: '10px' }}>1:1 맞춤 훈련</span>
+                      <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.25rem' }}>1회 원포인트 방문 훈련</h3>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                        90분간 목줄 리드워크, 벨 반응, 매트 훈련 집중 교정 (대소변 훈련 제외 / 성공 시 보상 지급)
+                      </p>
                     </div>
-                    <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>
-                      📅 날짜 선택하고 예약하기
-                    </button>
+                    <div>
+                      <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '14px' }}>
+                        200,000원 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>(+ 거리 출장비)</span>
+                      </div>
+                      <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>
+                        📅 날짜 선택하고 예약하기
+                      </button>
+                    </div>
                   </div>
 
                   {/* Card 2: Q&A */}
-                  <div className="glass-card" style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => setActiveTab('qna')}>
-                    <span className="badge badge-purple" style={{ marginBottom: '8px' }}>Q&A 커뮤니티</span>
-                    <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem' }}>❓ 회원 맞춤 질문 게시판</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
-                      궁금한 문제 행동을 질문하고 전문 훈련사의 답변을 받아보세요.
-                    </p>
-                    <button className="btn btn-secondary btn-full">
-                      질문 게시판 이동
-                    </button>
+                  <div className="glass-card" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', transition: 'all 0.2s ease-in-out' }} onClick={() => setActiveTab('qna')}>
+                    <div>
+                      <span className="badge badge-purple" style={{ marginBottom: '10px' }}>Q&A 커뮤니티</span>
+                      <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.25rem' }}>❓ 회원 맞춤 질문 게시판</h3>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                        궁금한 강아지 문제 행동을 질문하고 전문 훈련사의 1:1 맞춤 답변을 받아보세요.
+                      </p>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#A78BFA', marginBottom: '14px' }}>
+                        💬 전문 훈련사 무료 답변
+                      </div>
+                      <button className="btn btn-secondary btn-full">
+                        질문 게시판 이동
+                      </button>
+                    </div>
                   </div>
 
                   {/* Card 3: Photo Gallery */}
-                  <div className="glass-card" style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => setActiveTab('photoboard')}>
-                    <span className="badge badge-orange" style={{ marginBottom: '8px' }}>PHOTO GALLERY</span>
-                    <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem' }}>📸 우리 강아지 포토 갤러리</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
-                      사랑스러운 강아지 사진을 자랑하고 하트를 받으세요!
-                    </p>
-                    <button className="btn btn-accent btn-full">
-                      포토 갤러리 구경하기
-                    </button>
+                  <div className="glass-card" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', transition: 'all 0.2s ease-in-out' }} onClick={() => setActiveTab('photoboard')}>
+                    <div>
+                      <span className="badge badge-orange" style={{ marginBottom: '10px' }}>PHOTO GALLERY</span>
+                      <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.25rem' }}>📸 우리 강아지 포토 갤러리</h3>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                        사랑스러운 강아지 자랑하고 다른 반려견 보호자들과 소통하며 하트를 받아보세요!
+                      </p>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#F59E0B', marginBottom: '14px' }}>
+                        ❤️ 귀여운 포토 자랑하기
+                      </div>
+                      <button className="btn btn-accent btn-full">
+                        포토 갤러리 구경하기
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

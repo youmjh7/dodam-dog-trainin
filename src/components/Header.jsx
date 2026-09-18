@@ -46,10 +46,10 @@ export const Header = () => {
           </button>
           <button
             className={`nav-link ${activeTab === 'app-store' || activeTab === 'appstore' ? 'active' : ''}`}
-            onClick={() => setActiveTab('app-store')}
-            style={{ background: activeTab === 'app-store' || activeTab === 'appstore' ? 'rgba(16, 185, 129, 0.2)' : 'transparent', color: activeTab === 'app-store' || activeTab === 'appstore' ? '#10B981' : 'inherit', border: activeTab === 'app-store' || activeTab === 'appstore' ? '1px solid #10B981' : '1px solid transparent', borderRadius: '8px' }}
+            onClick={() => setActiveTab('appstore')}
+            style={{ background: activeTab === 'app-store' || activeTab === 'appstore' ? '#10B981' : 'transparent', color: activeTab === 'app-store' || activeTab === 'appstore' ? '#FFF' : '#10B981', border: '1px solid #10B981', borderRadius: '8px' }}
           >
-            <Smartphone size={16} color="#10B981" />
+            <Smartphone size={16} color={activeTab === 'app-store' || activeTab === 'appstore' ? '#FFF' : '#10B981'} />
             📱 도담앱스토어
           </button>
           <button
@@ -65,25 +65,11 @@ export const Header = () => {
             📸 강아지 포토
           </button>
           <button
-            className={`nav-link ${activeTab === 'consultation' ? 'active' : ''}`}
-            onClick={() => setActiveTab('consultation')}
+            className={`nav-link ${activeTab === 'pet-profile' || activeTab === 'profile' ? 'active' : ''}`}
+            onClick={() => setActiveTab('pet-profile')}
           >
-            <MessageSquare size={16} />
-            1:1 영상 챗
-          </button>
-          <button
-            className={`nav-link ${activeTab === 'ai-studio' ? 'active' : ''}`}
-            onClick={() => setActiveTab('ai-studio')}
-          >
-            <Sparkles size={16} color="#F59E0B" />
-            AI 스튜디오
-          </button>
-          <button
-            className={`nav-link ${activeTab === 'membership' ? 'active' : ''}`}
-            onClick={() => setActiveTab('membership')}
-          >
-            <Crown size={16} color="#A78BFA" />
-            멤버십/요금
+            <Dog size={16} />
+            내 반려견
           </button>
         </nav>
 
@@ -126,7 +112,7 @@ export const Header = () => {
             style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
           >
             <UserPlus size={15} />
-            회원가입 / 로그인
+            🔑 회원가입 / 로그인
           </button>
         </div>
       </div>
