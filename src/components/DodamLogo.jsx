@@ -23,39 +23,42 @@ export const DodamLogo = ({ size = 44, style = {} }) => {
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Background Circle */}
+        {/* Green Background Circle */}
         <circle cx="50" cy="50" r="50" fill="#10B981" />
 
-        <g transform="translate(0, 2)">
-          {/* Brown Ears */}
+        {/* Mascot Face */}
+        <g transform="translate(0, 3)">
+          {/* Floppy Brown Ears */}
           <path 
-            d="M22 28 C14 36, 12 55, 20 68 C25 76, 32 72, 30 58 C29 48, 28 35, 22 28 Z" 
-            fill="#78350F" 
+            d="M24 26 C15 34 13 54 20 66 C24 74 32 70 30 58 C29 48 27 35 24 26 Z" 
+            fill="#854D0E" 
           />
           <path 
-            d="M78 28 C86 36, 88 55, 80 68 C75 76, 68 72, 70 58 C71 48, 72 35, 78 28 Z" 
-            fill="#78350F" 
+            d="M76 26 C85 34 87 54 80 66 C76 74 68 70 70 58 C71 48 73 35 76 26 Z" 
+            fill="#854D0E" 
           />
 
-          {/* White Head & Muzzle */}
+          {/* White Head Center & Muzzle */}
           <path 
-            d="M28 42 C28 24, 72 24, 72 42 C72 65, 60 74, 50 74 C40 74, 28 65, 28 42 Z" 
+            d="M30 40 C30 24 70 24 70 40 C70 60 60 72 50 72 C40 72 30 60 30 40 Z" 
             fill="#FFFFFF" 
           />
 
-          {/* Eyes */}
-          <circle cx="39" cy="42" r="4.5" fill="#0F172A" />
-          <circle cx="37.5" cy="40.5" r="1.5" fill="#FFFFFF" />
+          {/* Expressive Glossy Eyes */}
+          <circle cx="38" cy="42" r="5" fill="#0F172A" />
+          <circle cx="36.5" cy="40.2" r="1.8" fill="#FFFFFF" />
           
-          <circle cx="61" cy="42" r="4.5" fill="#0F172A" />
-          <circle cx="59.5" cy="40.5" r="1.5" fill="#FFFFFF" />
+          <circle cx="62" cy="42" r="5" fill="#0F172A" />
+          <circle cx="60.5" cy="40.2" r="1.8" fill="#FFFFFF" />
 
-          {/* Black Nose */}
-          <ellipse cx="50" cy="52" rx="6" ry="4.5" fill="#0F172A" />
+          {/* Cute Black Oval Nose */}
+          <ellipse cx="50" cy="52" rx="6.5" ry="4.5" fill="#0F172A" />
 
-          {/* Mouth & Cute Red Tongue */}
-          <path d="M46 56 Q50 60 54 56" stroke="#0F172A" strokeWidth="2.2" strokeLinecap="round" />
-          <path d="M47 58 C47 66, 53 66, 53 58 Z" fill="#EF4444" />
+          {/* Smile Mouth Line */}
+          <path d="M45 56 Q50 60 55 56" stroke="#0F172A" strokeWidth="2.2" strokeLinecap="round" />
+
+          {/* Cute Pink/Red Tongue */}
+          <path d="M46.5 57 C46.5 65.5 53.5 65.5 53.5 57 Z" fill="#EF4444" />
         </g>
       </svg>
     </div>
