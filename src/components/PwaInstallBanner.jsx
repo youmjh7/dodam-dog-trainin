@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Smartphone, Download, Check, X } from 'lucide-react';
+import { Download, Smartphone } from 'lucide-react';
+import { DodamLogo } from './DodamLogo';
 
 export const PwaInstallBanner = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -7,47 +8,37 @@ export const PwaInstallBanner = () => {
   const [installed, setInstalled] = useState(false);
 
   useEffect(() => {
-    // Check service worker registration
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch((err) => {
-        console.log('ServiceWorker registration failed:', err);
-      });
-    }
-
-    const handleBeforeInstallPrompt = (e) => {
+    const handler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
       setShowBanner(true);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('beforeinstallprompt', handler);
 
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setInstalled(true);
+    }
+
+    return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) {
-      alert('스마트폰 브라우저 메뉴(⋮ 또는 공유 버튼)에서 [홈 화면에 추가]를 클릭하시면 앱으로 설치하실 수 있습니다!');
-      return;
-    }
+    if (!deferredPrompt) return;
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') {
-      setInstalled(true);
       setShowBanner(false);
+      setInstalled(true);
     }
     setDeferredPrompt(null);
   };
 
   if (!showBanner && !installed) {
     return (
-      <div style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)', border: '1px solid #10B981', borderRadius: '14px', padding: '14px 18px', margin: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+      <div style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)', border: '1px solid #10B981', borderRadius: '14px', padding: '14px 18px', margin: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem' }}>
-            🐶
-          </div>
+          <DodamLogo size={40} />
           <div>
             <div style={{ fontWeight: 'bold', fontSize: '0.96rem', color: '#FFF' }}>📱 스마트폰 전용 '도담' 공식 앱 설치하기</div>
             <div style={{ fontSize: '0.82rem', color: '#94A3B8' }}>홈 화면 아이콘 등록으로 1초 만에 편리하게 방문 예약하세요!</div>
