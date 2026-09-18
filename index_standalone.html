@@ -219,6 +219,39 @@
       return 25;
     }
 
+    const DodamLogo = ({ size = 44, style = {} }) => (
+      <div 
+        style={{ 
+          width: `${size}px`, 
+          height: `${size}px`, 
+          borderRadius: '50%', 
+          overflow: 'hidden', 
+          display: 'inline-flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          boxShadow: '0 0 25px rgba(16, 185, 129, 0.45)',
+          flexShrink: 0,
+          ...style 
+        }}
+      >
+        <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="50" fill="#10B981" />
+          <g transform="translate(0, 3)">
+            <path d="M24 26 C15 34 13 54 20 66 C24 74 32 70 30 58 C29 48 27 35 24 26 Z" fill="#854D0E" />
+            <path d="M76 26 C85 34 87 54 80 66 C76 74 68 70 70 58 C71 48 73 35 76 26 Z" fill="#854D0E" />
+            <path d="M30 40 C30 24 70 24 70 40 C70 60 60 72 50 72 C40 72 30 60 30 40 Z" fill="#FFFFFF" />
+            <circle cx="38" cy="42" r="5" fill="#0F172A" />
+            <circle cx="36.5" cy="40.2" r="1.8" fill="#FFFFFF" />
+            <circle cx="62" cy="42" r="5" fill="#0F172A" />
+            <circle cx="60.5" cy="40.2" r="1.8" fill="#FFFFFF" />
+            <ellipse cx="50" cy="52" rx="6.5" ry="4.5" fill="#0F172A" />
+            <path d="M45 56 Q50 60 55 56" stroke="#0F172A" strokeWidth="2.2" strokeLinecap="round" />
+            <path d="M46.5 57 C46.5 65.5 53.5 65.5 53.5 57 Z" fill="#EF4444" />
+          </g>
+        </svg>
+      </div>
+    );
+
     function App() {
       const [activeTab, setActiveTab] = useState('home');
       const [pets, setPets] = useState(initialPets);
@@ -447,14 +480,19 @@
           {/* Header */}
           <header className="header">
             <div className="container header-inner">
-              <div className="brand" onClick={() => setActiveTab('home')} style={{ display: 'flex', alignItems: 'center', gap: '10px', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" alt="도담 로고" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
-                <div className="brand-title font-heading" style={{ whiteSpace: 'nowrap', wordBreak: 'keep-all', flexShrink: 0 }}>도담</div>
+              <div className="brand" onClick={() => setActiveTab('home')} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                <DodamLogo size={42} />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span className="brand-title font-heading" style={{ whiteSpace: 'nowrap', wordBreak: 'keep-all', fontSize: '1.2rem', fontWeight: '800', color: '#FFF' }}>도담</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>DODAM · 방문 반려견 훈련 서비스</span>
+                </div>
               </div>
 
               <div className="nav-links" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
                 <button className={`nav-btn ${activeTab === 'home' ? 'active' : ''}`} onClick={() => setActiveTab('home')} style={{ whiteSpace: 'nowrap' }}>홈</button>
-                <button className={`nav-btn ${activeTab === 'booking' ? 'active' : ''}`} onClick={() => setActiveTab('booking')} style={{ whiteSpace: 'nowrap' }}>📅 예약 캘린더 & 거리계산기</button>
+                <button className={`nav-btn ${activeTab === 'booking' ? 'active' : ''}`} onClick={() => setActiveTab('booking')} style={{ whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  📅 방문 훈련 예약 <span className="badge badge-orange" style={{ fontSize: '0.72rem', padding: '2px 6px' }}>회당 15만원~</span>
+                </button>
                 <button className={`nav-btn ${activeTab === 'appstore' ? 'active' : ''}`} onClick={() => setActiveTab('appstore')} style={{ background: activeTab === 'appstore' ? '#10B981' : 'transparent', color: activeTab === 'appstore' ? '#FFF' : '#10B981', border: '1px solid #10B981', whiteSpace: 'nowrap' }}>📱 도담앱스토어</button>
                 <button className={`nav-btn ${activeTab === 'qna' ? 'active' : ''}`} onClick={() => setActiveTab('qna')} style={{ whiteSpace: 'nowrap' }}>❓ Q&A 질문란</button>
                 <button className={`nav-btn ${activeTab === 'photoboard' ? 'active' : ''}`} onClick={() => setActiveTab('photoboard')} style={{ whiteSpace: 'nowrap' }}>📸 강아지 포토</button>
@@ -479,53 +517,76 @@
             {/* Home View */}
             {activeTab === 'home' && (
               <div className="container">
-                <div style={{ textAlign: 'center', margin: '30px 0 50px 0' }}>
-                  <div style={{ display: 'inline-block', marginBottom: '16px' }}>
-                    <img src="C:/Users/yh119/.gemini/antigravity-ide/brain/d1190999-c97c-46b2-bc69-6a72f60c7688/dodam_mascot_seamless_1789574475756.jpg" alt="도담 마스코트" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #10B981', boxShadow: '0 0 30px rgba(16, 185, 129, 0.45)' }} />
+                <div style={{ textAlign: 'center', margin: '20px 0 40px 0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                    <DodamLogo size={110} />
                   </div>
-                  <h1 style={{ fontSize: '2.6rem', margin: '12px 0', color: '#FFF' }}>
-                    우리 강아지 맞춤 1:1 방문 훈련<br />
-                    <span className="text-gradient">전문 훈련사가 댁으로 직접 찾아갑니다</span>
+
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255, 136, 0, 0.15)', border: '1px solid #FF8800', borderRadius: '9999px', padding: '6px 16px', color: '#FF8800', fontSize: '0.88rem', fontWeight: 'bold', marginBottom: '16px' }}>
+                    🛡️ 1회 방문: 20만원 / 2회 이상: 회당 15만원 · 경기도 안산시 출발 (km당 2천원)
+                  </div>
+
+                  <h1 style={{ fontSize: '2.5rem', fontWeight: '800', margin: '12px 0', color: '#FFF', lineHeight: '1.3' }}>
+                    우리 집 강아지의 문제 행동,<br />
+                    <span className="text-gradient">전문 훈련사가 직접 댁으로 찾아갑니다</span>
                   </h1>
-                  <p style={{ color: 'var(--text-muted)', marginBottom: '28px', fontSize: '1.05rem' }}>
-                    소리 짖음, 현관 경계, 분리불안, 산책 당김 1:1 맞춤 현장 솔루션 제공
+                  <p style={{ color: 'var(--text-muted)', marginBottom: '24px', fontSize: '1.05rem' }}>
+                    경기도 안산시 출발! 거리에 따른 투명한 출장비 계산기와 1:1 맞춤 현장 솔루션을 제공합니다.
                   </p>
 
                   {/* Important Notice Card */}
-                  <div style={{ background: 'rgba(255, 107, 0, 0.1)', border: '1px solid #FF8800', borderRadius: '16px', padding: '20px', maxWidth: '780px', margin: '0 auto 30px auto', textAlign: 'left' }}>
-                    <div style={{ color: '#FF8800', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '6px' }}>
-                      🚨 [훈련 범위 & 원칙] 도담 1:1 방문 훈련 필독 안내
+                  <div style={{ background: 'rgba(255, 107, 0, 0.12)', border: '1px solid #FF8800', borderRadius: '16px', padding: '20px', maxWidth: '800px', margin: '0 auto 28px auto', textAlign: 'left' }}>
+                    <div style={{ color: '#FF8800', fontWeight: 'bold', fontSize: '1.08rem', marginBottom: '6px' }}>
+                      🚨 [훈련 범위 & 원칙] 도담 1:1 방문 훈련 핵심 필독 안내
                     </div>
                     <div style={{ color: '#FFF', fontSize: '1.02rem', fontWeight: 'bold', marginBottom: '4px' }}>
                       🚫 대소변 훈련 미진행 | ❌ 간식 유혹·유인 훈련 NO! | ⭕ 바른 목줄(리드줄) 훈련 OK!
                     </div>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: 0, lineHeight: '1.5' }}>
-                      <strong>※ 대소변 훈련은 진행하지 않습니다.</strong> 소리 짖음, 외부인 경계, 분리불안, 산책 당김 교정을 전문으로 합니다.<br />
-                      간식 유인이 아닌 보호자님과의 바른 리드워크(목줄) 훈련으로 문제 행동을 근본 교정하며, <strong>교정 성공 후 올바른 행동에 대한 긍정 보상 간식은 정상 지급합니다!</strong>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, lineHeight: '1.5' }}>
+                      <strong>※ 대소변 훈련은 진행하지 않습니다.</strong> 소리 짖음, 벨 반응, 분리불안, 산책 당김 교정을 전문으로 하며, 훈련 성공 시 칭찬 보상 간식은 정상 제공됩니다.
                     </p>
+                  </div>
+
+                  {/* Key Stats Bar */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', maxWidth: '800px', margin: '0 auto 36px auto' }}>
+                    <div style={{ background: 'rgba(22, 30, 46, 0.8)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '16px', textAlign: 'center' }}>
+                      <div style={{ fontSize: '1.2rem', fontWeight: '800', color: '#FF8800' }}>20만원 / 15만원</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>1회 20만 / 2회이상 회당 15만</div>
+                    </div>
+                    <div style={{ background: 'rgba(22, 30, 46, 0.8)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '16px', textAlign: 'center' }}>
+                      <div style={{ fontSize: '1.2rem', fontWeight: '800', color: '#10B981' }}>km당 2,000원</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>경기도 안산시 출발 거리 출장비</div>
+                    </div>
+                    <div style={{ background: 'rgba(22, 30, 46, 0.8)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '16px', textAlign: 'center' }}>
+                      <div style={{ fontSize: '1.2rem', fontWeight: '800', color: '#F59E0B' }}>4.9 / 5.0</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>실제 보호자 평점 (3,400+건)</div>
+                    </div>
                   </div>
                 </div>
 
+                {/* Services Grid */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '20px' }}>
                   <div className="glass-card">
+                    <span className="badge badge-orange" style={{ marginBottom: '8px' }}>1회 단독 세션</span>
                     <h3 style={{ color: '#FFF', marginBottom: '8px' }}>1회 원포인트 방문 훈련</h3>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>90분간 목줄 리드워크, 벨 반응, 매트 훈련 집중 교정 (대소변 훈련 제외 / 성공 시 보상 지급)</p>
-                    <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '16px' }}>200,000원 (+ 거리 출장비)</div>
-                    <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>📅 날짜 선택하고 예약하기</button>
+                    <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '16px' }}>200,000원 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>/ 1회 (+ 출장비 별도)</span></div>
+                    <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>📅 1회 방문 훈련 예약하기</button>
                   </div>
 
-                  <div className="glass-card" onClick={() => setActiveTab('qna')} style={{ cursor: 'pointer' }}>
-                    <span className="badge badge-purple" style={{ marginBottom: '8px' }}>Q&A 커뮤니티</span>
-                    <h3 style={{ color: '#FFF', marginBottom: '8px' }}>❓ 회원 맞춤 질문 게시판</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>궁금한 문제 행동을 질문하고 전문 훈련사의 답변을 받아보세요.</p>
-                    <button className="btn btn-secondary btn-full">질문 게시판 이동</button>
+                  <div className="glass-card">
+                    <span className="badge badge-purple" style={{ marginBottom: '8px' }}>추천 패키지</span>
+                    <h3 style={{ color: '#FFF', marginBottom: '8px' }}>2회 이상 연속 패키지</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>회당 15만원 적용 혜택! 행동 습관 형성이 필요한 강아지를 위한 단계별 케어</p>
+                    <div style={{ fontSize: '1.4rem', fontWeight: '800', color: '#A78BFA', marginBottom: '16px' }}>300,000원~ <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>/ 2회 기준 (회당 15만원)</span></div>
+                    <button className="btn btn-accent btn-full" onClick={() => setActiveTab('booking')}>📅 2회 이상 패키지 신청</button>
                   </div>
 
                   <div className="glass-card" onClick={() => setActiveTab('photoboard')} style={{ cursor: 'pointer' }}>
-                    <span className="badge badge-orange" style={{ marginBottom: '8px' }}>PHOTO GALLERY</span>
+                    <span className="badge badge-green" style={{ marginBottom: '8px' }}>PHOTO GALLERY</span>
                     <h3 style={{ color: '#FFF', marginBottom: '8px' }}>📸 우리 강아지 포토 갤러리</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>사랑스러운 강아지 사진을 자랑하고 하트를 받으세요!</p>
-                    <button className="btn btn-accent btn-full">포토 갤러리 구경하기</button>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>사랑스러운 강아지 사진을 자랑하고 자랑글을 작성해 보세요!</p>
+                    <button className="btn btn-secondary btn-full">포토 갤러리 구경하기</button>
                   </div>
                 </div>
               </div>
