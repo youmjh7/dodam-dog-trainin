@@ -564,29 +564,73 @@
                   </div>
                 </div>
 
+                {/* Services Section Header */}
+                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                  <span className="badge badge-orange" style={{ marginBottom: '8px' }}>SERVICES</span>
+                  <h2 style={{ color: '#FFF', fontSize: '1.8rem', fontWeight: '800', margin: '4px 0' }}>PawCoach 맞춤 케어 프로그램</h2>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem' }}>필요에 맞게 선택할 수 있는 훈련 & 케어 솔루션</p>
+                </div>
+
                 {/* Services Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '20px' }}>
-                  <div className="glass-card">
-                    <span className="badge badge-orange" style={{ marginBottom: '8px' }}>1회 단독 세션</span>
-                    <h3 style={{ color: '#FFF', marginBottom: '8px' }}>1회 원포인트 방문 훈련</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>90분간 목줄 리드워크, 벨 반응, 매트 훈련 집중 교정 (대소변 훈련 제외 / 성공 시 보상 지급)</p>
-                    <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '16px' }}>200,000원 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>/ 1회 (+ 출장비 별도)</span></div>
-                    <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>📅 1회 방문 훈련 예약하기</button>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+                  {/* Service 1: 1 Session */}
+                  <div className="glass-card" style={{ border: '1px solid rgba(255, 107, 0, 0.4)', position: 'relative' }}>
+                    <div style={{ background: '#FF6B00', color: '#FFF', fontSize: '0.75rem', fontWeight: 'bold', padding: '3px 10px', borderRadius: '9999px', display: 'inline-block', marginBottom: '12px' }}>1회 단독 세션</div>
+                    <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem', fontWeight: '700' }}>1회 원포인트 방문 훈련</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                      전문 훈련사가 직접 댁으로 방문하여 소리 짖음, 벨 반응, 매트 훈련, 외부인 경계 등 생활 환경 맞춤 솔루션을 90분간 집중 제공합니다.
+                    </p>
+                    <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#FF8800', marginBottom: '16px' }}>
+                      200,000원 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>/ 1회 (+ 출장비 별도)</span>
+                    </div>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px 0', fontSize: '0.85rem', color: '#E2E8F0', lineHeight: '1.8' }}>
+                      <li>✓ 사전 영상 1:1 행동 분석</li>
+                      <li>✓ 현장 환경 위험요소 진단</li>
+                      <li>✓ 안산 부곡동 출발 출장비 계산</li>
+                    </ul>
+                    <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>
+                      1회 방문 훈련 예약하기
+                    </button>
                   </div>
 
-                  <div className="glass-card">
-                    <span className="badge badge-purple" style={{ marginBottom: '8px' }}>추천 패키지</span>
-                    <h3 style={{ color: '#FFF', marginBottom: '8px' }}>2회 이상 연속 패키지</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>회당 15만원 적용 혜택! 행동 습관 형성이 필요한 강아지를 위한 단계별 케어</p>
-                    <div style={{ fontSize: '1.4rem', fontWeight: '800', color: '#A78BFA', marginBottom: '16px' }}>300,000원~ <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>/ 2회 기준 (회당 15만원)</span></div>
-                    <button className="btn btn-accent btn-full" onClick={() => setActiveTab('booking')}>📅 2회 이상 패키지 신청</button>
+                  {/* Service 2: 2 Session Package */}
+                  <div className="glass-card" style={{ position: 'relative' }}>
+                    <div style={{ background: '#8B5CF6', color: '#FFF', fontSize: '0.75rem', fontWeight: 'bold', padding: '3px 10px', borderRadius: '9999px', display: 'inline-block', marginBottom: '12px' }}>회당 15만원 할인!</div>
+                    <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem', fontWeight: '700' }}>2회 이상 연속 패키지</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                      2회 이상 신청 시 회당 15만원 할인 혜택! 지속적인 행동 습관 형성이 필요한 강아지를 위한 단계별 케어.
+                    </p>
+                    <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#A78BFA', marginBottom: '16px' }}>
+                      300,000원 ~ <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>/ 2회 기준 (회당 15만원)</span>
+                    </div>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px 0', fontSize: '0.85rem', color: '#E2E8F0', lineHeight: '1.8' }}>
+                      <li>✓ 회당 15만원 할인 적용</li>
+                      <li>✓ 주차별 맞춤 훈련 미션</li>
+                      <li>✓ 1:1 영상 챗 코칭 지원</li>
+                    </ul>
+                    <button className="btn btn-secondary btn-full" onClick={() => setActiveTab('booking')}>
+                      2회 이상 패키지 신청
+                    </button>
                   </div>
 
-                  <div className="glass-card" onClick={() => setActiveTab('photoboard')} style={{ cursor: 'pointer' }}>
-                    <span className="badge badge-green" style={{ marginBottom: '8px' }}>PHOTO GALLERY</span>
-                    <h3 style={{ color: '#FFF', marginBottom: '8px' }}>📸 우리 강아지 포토 갤러리</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px' }}>사랑스러운 강아지 사진을 자랑하고 자랑글을 작성해 보세요!</p>
-                    <button className="btn btn-secondary btn-full">포토 갤러리 구경하기</button>
+                  {/* Service 3: AI Studio */}
+                  <div className="glass-card">
+                    <div style={{ background: '#F59E0B', color: '#000', fontSize: '0.75rem', fontWeight: 'bold', padding: '3px 10px', borderRadius: '9999px', display: 'inline-block', marginBottom: '12px' }}>AI AI STUDIO</div>
+                    <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem', fontWeight: '700' }}>AI 강아지 이미지 스튜디오</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                      우리 강아지 사진으로 만들어내는 프라이빗 AI 스튜디오! 히어로, 명화, 사이버펑크, 애니메이션 캐릭터 카드 생성.
+                    </p>
+                    <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#F59E0B', marginBottom: '16px' }}>
+                      무료 3회 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>/ 가입 즉시 체험</span>
+                    </div>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px 0', fontSize: '0.85rem', color: '#E2E8F0', lineHeight: '1.8' }}>
+                      <li>✓ 5가지 고품질 AI 테마</li>
+                      <li>✓ 펫 아바타 카드 자동 제작</li>
+                      <li>✓ HD 고화질 다운로드</li>
+                    </ul>
+                    <button className="btn btn-accent btn-full" onClick={() => setActiveTab('appstore')}>
+                      AI 스튜디오 체험하기
+                    </button>
                   </div>
                 </div>
               </div>
