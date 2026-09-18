@@ -4,140 +4,84 @@ import { DodamLogo } from '../components/DodamLogo';
 import { ShieldCheck, Calendar, MessageSquare, Sparkles, Star, Award, CheckCircle, ArrowRight, Zap, Crown } from 'lucide-react';
 
 export const HomeView = () => {
-  const { setActiveTab, openPaymentModal, activePet } = useApp();
+  const { setActiveTab } = useApp();
 
   return (
-    <div className="home-view">
-      {/* Hero Banner Section */}
-      <section className="hero-section">
-        <div className="container hero-container">
-          <div style={{ textAlign: 'center', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+    <div className="home-view" style={{ paddingBottom: '40px' }}>
+      <section className="hero-section" style={{ textAlign: 'center', padding: '40px 0 30px 0' }}>
+        <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
             <DodamLogo size={110} />
           </div>
 
-          <div className="hero-badge pulse-element">
-            <ShieldCheck size={16} color="#FF8800" />
-            <span>1회 방문: 20만원 / 2회 이상: 회당 15만원 · 경기도 안산시 출발 (km당 2천원)</span>
-          </div>
-
-          <h1 className="hero-title">
-            우리 집 강아지의 문제 행동,<br />
-            <span className="text-gradient">전문 훈련사가 직접 댁으로 찾아갑니다</span>
+          <h1 style={{ fontSize: '2.4rem', fontWeight: '800', color: '#FFF', margin: '12px 0', lineHeight: '1.35' }}>
+            우리 강아지 맞춤 1:1 방문 훈련<br />
+            <span className="text-gradient">전문 훈련사가 댁으로 직접 찾아갑니다</span>
           </h1>
 
-          <p className="hero-description">
-            경기도 안산시 출발! 거리에 따른 투명한 출장비 계산기와 1:1 맞춤 현장 솔루션을 제공합니다.
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.02rem', marginBottom: '24px' }}>
+            소리 짖음, 현관 경계, 분리불안, 산책 당김 1:1 맞춤 현장 솔루션 제공
           </p>
 
-          {/* Training Philosophy Important Notice Banner */}
-          <div style={{ background: 'rgba(255, 107, 0, 0.12)', border: '1px solid #FF8800', borderRadius: '16px', padding: '20px', maxWidth: '800px', margin: '20px auto', textAlign: 'left' }}>
+          {/* Important Notice Card */}
+          <div style={{ background: 'rgba(255, 107, 0, 0.1)', border: '1px solid #FF8800', borderRadius: '16px', padding: '20px', maxWidth: '780px', margin: '0 auto 30px auto', textAlign: 'left' }}>
             <div style={{ color: '#FF8800', fontWeight: 'bold', fontSize: '1.08rem', marginBottom: '6px' }}>
-              🚨 [훈련 범위 & 원칙] 도담 1:1 방문 훈련 핵심 필독 안내
+              🚨 [훈련 범위 & 원칙] 도담 1:1 방문 훈련 필독 안내
             </div>
             <div style={{ color: '#FFF', fontSize: '1.02rem', fontWeight: 'bold', marginBottom: '4px' }}>
               🚫 대소변 훈련 미진행 | ❌ 간식 유혹·유인 훈련 NO! | ⭕ 바른 목줄(리드줄) 훈련 OK!
             </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, lineHeight: '1.5' }}>
-              <strong>※ 대소변 훈련은 진행하지 않습니다.</strong> 소리 짖음, 벨 반응, 분리불안, 산책 당김 교정을 전문으로 하며, 훈련 성공 시 칭찬 보상 간식은 정상 제공됩니다.
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: 0, lineHeight: '1.5' }}>
+              <strong>※ 대소변 훈련은 진행하지 않습니다.</strong> 소리 짖음, 외부인 경계, 분리불안, 산책 당김 교정을 전문으로 합니다.<br />
+              간식 유인이 아닌 보호자님과의 바른 리드워크(목줄) 훈련으로 문제 행동을 근본 교정하며, <strong>교정 성공 후 올바른 행동에 대한 긍정 보상 간식은 정상 지급합니다!</strong>
             </p>
           </div>
 
-          {/* Key Stats Bar */}
-          <div className="hero-stats-grid">
-            <div className="stat-card">
-              <span className="stat-num">20만원 / 15만원</span>
-              <span className="stat-label">1회 20만 / 2회이상 회당 15만</span>
+          {/* 3 Main Action Cards Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginTop: '20px' }}>
+            {/* Card 1: Booking */}
+            <div className="glass-card" style={{ textAlign: 'left' }}>
+              <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem' }}>1회 원포인트 방문 훈련</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                90분간 목줄 리드워크, 벨 반응, 매트 훈련 집중 교정 (대소변 훈련 제외 / 성공 시 보상 지급)
+              </p>
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '16px' }}>
+                200,000원 (+ 거리 출장비)
+              </div>
+              <button className="btn btn-primary btn-full" onClick={() => setActiveTab('booking')}>
+                📅 날짜 선택하고 예약하기
+              </button>
             </div>
-            <div className="stat-card">
-              <span className="stat-num">km당 2,000원</span>
-              <span className="stat-label">경기도 안산시 출발 거리 출장비</span>
+
+            {/* Card 2: Q&A */}
+            <div className="glass-card" style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => setActiveTab('qna')}>
+              <span className="badge badge-purple" style={{ marginBottom: '8px' }}>Q&A 커뮤니티</span>
+              <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem' }}>❓ 회원 맞춤 질문 게시판</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                궁금한 문제 행동을 질문하고 전문 훈련사의 답변을 받아보세요.
+              </p>
+              <button className="btn btn-secondary btn-full">
+                질문 게시판 이동
+              </button>
             </div>
-            <div className="stat-card">
-              <span className="stat-num">4.9 / 5.0</span>
-              <span className="stat-label">실제 보호자 평점 (3,400+건)</span>
+
+            {/* Card 3: Photo Gallery */}
+            <div className="glass-card" style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => setActiveTab('photoboard')}>
+              <span className="badge badge-orange" style={{ marginBottom: '8px' }}>PHOTO GALLERY</span>
+              <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem' }}>📸 우리 강아지 포토 갤러리</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                사랑스러운 강아지 사진을 자랑하고 하트를 받으세요!
+              </p>
+              <button className="btn btn-accent btn-full">
+                포토 갤러리 구경하기
+              </button>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Main Services Grid */}
-      <section className="services-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">SERVICES</span>
-            <h2>PawCoach 맞춤 케어 프로그램</h2>
-            <p>필요에 맞게 선택할 수 있는 훈련 & 케어 솔루션</p>
-          </div>
-
-          <div className="services-grid">
-            {/* Service 1: 1 Session Visit */}
-            <div className="service-card featured">
-              <div className="card-top-tag font-heading">1회 단독 세션</div>
-              <div className="service-icon orange">
-                <Calendar size={28} color="#FF6B00" />
-              </div>
-              <h3 className="service-title">1회 원포인트 방문 훈련</h3>
-              <p className="service-desc">
-                전문 훈련사가 직접 댁으로 방문하여 소리 짖음, 벨 반응, 매트 훈련, 외부인 경계 등 생활 환경 맞춤 솔루션을 90분간 집중 제공합니다.
-              </p>
-              <div className="service-price">
-                <span className="price-tag font-heading">200,000원</span>
-                <span className="price-unit">/ 1회 (+ 출장비 별도)</span>
-              </div>
-              <ul className="feature-list">
-                <li><CheckCircle size={14} color="#FF6B00" /> 사전 영상 1:1 행동 분석</li>
-                <li><CheckCircle size={14} color="#FF6B00" /> 현장 환경 위험요소 진단</li>
-                <li><CheckCircle size={14} color="#FF6B00" /> 안산 부곡동 출발 출장비 계산</li>
-              </ul>
-              <button
-                className="btn btn-primary btn-full"
-                onClick={() => setActiveTab('booking')}
-              >
-                1회 방문 훈련 예약하기
-              </button>
-            </div>
-
-            {/* Service 2: 2 Session or More Package */}
-            <div className="service-card">
-              <div className="card-top-tag font-heading" style={{ background: '#8B5CF6' }}>회당 15만원 할인!</div>
-              <div className="service-icon purple">
-                <Award size={28} color="#8B5CF6" />
-              </div>
-              <h3 className="service-title">2회 이상 연속 패키지</h3>
-              <p className="service-desc">
-                2회 이상 신청 시 회당 15만원 할인 혜택! 지속적인 행동 습관 형성이 필요한 강아지를 위한 단계별 케어.
-              </p>
-              <div className="service-price">
-                <span className="price-tag font-heading">300,000원 ~</span>
-                <span className="price-unit">/ 2회 기준 (회당 15만원)</span>
-              </div>
-              <ul className="feature-list">
-                <li><CheckCircle size={14} color="#8B5CF6" /> 회당 15만원 할인 적용</li>
-                <li><CheckCircle size={14} color="#8B5CF6" /> 주차별 맞춤 훈련 미션</li>
-                <li><CheckCircle size={14} color="#8B5CF6" /> 1:1 영상 챗 코칭 지원</li>
-              </ul>
-              <button
-                className="btn btn-secondary btn-full"
-                onClick={() => setActiveTab('booking')}
-              >
-                2회 이상 패키지 신청
-              </button>
-            </div>
-
-            {/* Service 3: AI Pet Studio Teaser */}
-            <div className="service-card">
-              <div className="service-icon yellow">
-                <Sparkles size={28} color="#F59E0B" />
-              </div>
-              <h3 className="service-title">AI 강아지 이미지 스튜디오</h3>
-              <p className="service-desc">
-                우리 강아지 사진으로 만들어내는 프라이빗 AI 스튜디오! 히어로, 명화, 사이버펑크, 애니메이션 캐릭터 카드 생성.
-              </p>
-              <div className="service-price">
-                <span className="price-tag font-heading">무료 3회</span>
-                <span className="price-unit">/ 가입 즉시 체험</span>
-              </div>
-              <ul className="feature-list">
+    </div>
+  );
+};
                 <li><CheckCircle size={14} color="#F59E0B" /> 5가지 고품질 AI 테마</li>
                 <li><CheckCircle size={14} color="#F59E0B" /> 펫 아바타 카드 자동 제작</li>
                 <li><CheckCircle size={14} color="#F59E0B" /> HD 고화질 다운로드</li>
