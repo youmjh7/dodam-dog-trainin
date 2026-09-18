@@ -76,12 +76,15 @@ export const HomeView = () => {
                 포토 갤러리 구경하기
               </button>
             </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
+
+            {/* Card 4: AI Studio */}
+            <div className="glass-card" style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => setActiveTab('ai-studio')}>
+              <span className="badge badge-purple" style={{ marginBottom: '8px' }}>AI STUDIO</span>
+              <h3 style={{ color: '#FFF', marginBottom: '8px', fontSize: '1.2rem' }}>✨ AI 펫 아바타 스튜디오</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '12px', lineHeight: '1.5' }}>
+                우리 강아지 사진으로 AI 아바타 화보를 만들어 보세요.
+              </p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                 <li><CheckCircle size={14} color="#F59E0B" /> 5가지 고품질 AI 테마</li>
                 <li><CheckCircle size={14} color="#F59E0B" /> 펫 아바타 카드 자동 제작</li>
                 <li><CheckCircle size={14} color="#F59E0B" /> HD 고화질 다운로드</li>
