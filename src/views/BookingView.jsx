@@ -525,6 +525,8 @@ export const BookingView = () => {
             </button>
           </div>
         </div>
+      )}
+
       {/* Admin Date Schedule Edit Modal */}
       {adminEditDate && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>
@@ -629,6 +631,8 @@ export const BookingView = () => {
             })()}
           </div>
         </div>
+      )}
+
       {/* Admin Auth Modal (Pure Phone SMS Code Authentication) */}
       {showAdminPwModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>

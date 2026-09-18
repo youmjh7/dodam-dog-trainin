@@ -1,0 +1,20 @@
+# Dependencies & Build Output
+node_modules
+dist
+.vite
+
+# Environment variables & local files
+.env*.local
+*.log
+
+# Git & IDE
+.git
+.gitignore
+.vscode
+
+# Design files & assets not needed for web build
+금장로고시안
+로고시안
+
+# Capacitor / Mobile specific build folders if any
+capacitor.config.json
